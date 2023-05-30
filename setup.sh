@@ -21,7 +21,7 @@ kubectl wait --for=condition=Ready pod/$(kubectl get pod -l app=prometheus-serve
 
 echo "Forwarding Prometheus to Port 9999"
 kubectl port-forward deployment/prometheus-deployment -n monitoring 9999:9090 &
-printf "Prometheus running on Port 9999 with Process ID %s" $! > $current_dir/temp/pport.txt
+printf "Prometheus running on Port 9999 with Process ID %s" $! > $current_dir/deployment/_temp/ppid.txt
 echo $!
 
 #kubectl get deployments --namespace=monitoring
@@ -38,7 +38,7 @@ kubectl wait --for=condition=Ready pod/$(kubectl get pod -l app=grafana -n monit
 
 echo "Forwarding Grafana to Port 9000"
 kubectl port-forward deployment/grafana -n monitoring 9000:3000 &
-printf "Grafana running on Port 9000 with Process ID %s" $! > $current_dir/temp/gport.txt
+printf "Grafana running on Port 9000 with Process ID %s" $! > $current_dir/deployment/_temp/gpid.txt
 echo $!
 
 #$(kubectl get pod -l app=grafana -n monitoring -o jsonpath="{.items[0].metadata.name}")
