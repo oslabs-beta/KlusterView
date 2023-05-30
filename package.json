@@ -4,9 +4,10 @@
   "description": "",
   "main": "server/server.ts",
   "scripts": {
-    "start": "NODE_ENV=production node server/server.js",
+    "start": "NODE_ENV=production nodemon server/server.ts",
+    "devserver": "NODE_ENV=development nodemon server/server.ts",
     "build": "NODE_ENV=production webpack",
-    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.js\"",
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.ts\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -21,7 +22,9 @@
     "babel": "^6.23.0",
     "babel-loader": "^9.1.2",
     "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
     "concurrently": "^8.0.1",
+    "cookie-parser": "^1.4.6",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.4",
     "dotenv": "^16.0.3",
@@ -47,5 +50,9 @@
     "webpack-cli": "^5.1.1",
     "webpack-dev-server": "^4.15.0",
     "webpack-hot-middleware": "^2.25.3"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.3",
+    "@types/node": "^20.2.5"
   }
 }
