@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import path from 'path';
+import promRouter from './routes/promRouter';
+import grafanaRouter from './routes/grafanaRouter';
 
 const app = express();
 app.use(express.json());
@@ -25,16 +27,18 @@ mongoose
   .then(() => console.log('Database connection started'))
   .catch((err) => console.log(err));
 
-//
-//
-//Route Handler Can go in here
+//serving up html file
 app.get('/', (req: Request, res: Response) => {
   return res
     .status(200)
     .sendFile(path.resolve(__dirname, '../client/index.html'));
 });
-//
-//
+
+//Prom router gets data from PromAPI
+app.use('/prom', promRouter);
+
+//Grafana router gets visualization items from Grafana Dashboard
+app.use('/grafana', grafanaRouter);
 
 //404 Handler
 app.use('*', (req: Request, res: Response) => {
@@ -47,7 +51,7 @@ app.use((err: Errback, req: Request, res: Response, next: NextFunction) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 400,
-    message: { err: 'An error occurred' }
+    message: { err: 'An error occurred' },
   };
   const errorObj = Object.assign(defaultErr, err);
   return res.status(errorObj.status).json(errorObj.message);
