@@ -7,6 +7,6 @@ parentdir="$(dirname "$current_dir")"
 echo $parentdir
 
 #Kill port forwarding for saved PIDs
-for process_file in $parentdir/deployment/_temp/*.pid; do
-  kill -9 $(<$process_file);
+for filename in $parentdir/deployment/_temp/*.txt; do
+  echo $(<$filename)
 done
