@@ -4,4 +4,17 @@ html {
 
 body {
   font-size: 1.6rem;
+  background: linear-gradient(to top left, #414141, rgb(0, 0, 0));
+  color: cyan;
+}
+
+.page {
+  height: calc(100vh - 9.75rem);
+  width: calc(100vw - 15rem);
+  margin-left: 13rem;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
 }
