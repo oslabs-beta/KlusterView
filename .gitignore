@@ -5,3 +5,4 @@ prom_grafana_setup
 _temp_dev_files
 .dsStore
 **/.dsStore
+deployment/_temp

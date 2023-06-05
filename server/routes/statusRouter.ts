@@ -14,4 +14,13 @@ statusRouter.get(
   }
 );
 
+statusRouter.post(
+  '',
+  statusController.runSetup,
+  statusController.openPorts,
+  (req: Request, res: Response) => {
+    return res.sendStatus(200);
+  }
+);
+
 export default statusRouter;
