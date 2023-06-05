@@ -4,12 +4,15 @@ import Home from './pages/Home';
 import Pods from './pages/Pods';
 import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
+import ModalContainer from './components/Modal/ModalContainer';
+import Modal from './components/Modal/Modal';
 
 const App = () => {
   const [url, setUrl] = useState<string>('');
   const [klusterUrl, setKlusterUrl] = useState<string>('');
   const [podTitle, setPodTitle] = useState<string>('');
   const [podInfo, setPodInfo] = useState<{ name: string; ip: number }[]>([]);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   const getUrl = async () => {
     // try {
@@ -42,6 +45,8 @@ const App = () => {
         <Route path='/' element={<Home url={url} />} />
         <Route path='/pods/' element={<Pods url={url} podTitle={podTitle} />} />
       </Routes>
+      <ModalContainer modalVisible={modalVisible} />
+      <Modal modalVisible={modalVisible} />
     </>
   );
 };
