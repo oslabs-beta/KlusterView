@@ -53,7 +53,7 @@ const getCluster: MiddlewareFn = async (req, res, next) => {
   const { from, to } = timeStamp();
   try {
     const { dashboardUid, dashboardUri } = await getDashboard(1);
-    const src = 'test';
+    const src = `http://localhost:9000/d/${dashboardUid}/${dashboardUri}/?orgId=1&refresh=30sfrom=${from}&to=${to}`;
     res.locals.src = src;
     return next();
   } catch (error) {
