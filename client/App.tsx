@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Pods from './pages/Pods';
@@ -6,13 +6,41 @@ import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
 
 const App = () => {
+  const [url, setUrl] = useState<string>('');
+  const [klusterUrl, setKlusterUrl] = useState<string>('');
+  const [podTitle, setPodTitle] = useState<string>('');
+  const [podInfo, setPodInfo] = useState<{ name: string; ip: number }[]>([]);
+
+  const getUrl = async () => {
+    // try {
+    //   const res = await fetch('/grafana/dashboard');
+    //   const url = await res.json();
+    //   setUrl(url);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    setUrl('https://picsum.photos/id/237/1537/693');
+    setKlusterUrl('https://picsum.photos/id/237/1537/693');
+  };
+
+  useEffect(() => {
+    getUrl();
+  }, []);
+
   return (
     <>
       <Header />
-      <Sidebar />
+      <Sidebar
+        setPodTitle={setPodTitle}
+        url={url}
+        setUrl={setUrl}
+        podInfo={podInfo}
+        setPodInfo={setPodInfo}
+        klusterUrl={klusterUrl}
+      />
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/pods' element={<Pods />} />
+        <Route path='/' element={<Home url={url} />} />
+        <Route path='/pods/' element={<Pods url={url} podTitle={podTitle} />} />
       </Routes>
     </>
   );
