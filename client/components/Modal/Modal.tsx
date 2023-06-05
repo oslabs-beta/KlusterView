@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { FC, CSSProperties } from 'react';
 import './Modal.scss';
 
 interface ModalProps {
   modalVisible: boolean;
 }
 
-const Modal = ({ modalVisible }) => {
-  const modalStyle = {
+const Modal: FC<ModalProps> = ({ modalVisible }) => {
+  const modalStyle: CSSProperties = {
     visibility: modalVisible ? 'visible' : 'hidden',
     transform: modalVisible ? 'scale(1)' : 'scale(0.1)',
   };
