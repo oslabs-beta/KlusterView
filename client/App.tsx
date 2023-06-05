@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Pods from './pages/Pods';
@@ -7,7 +7,7 @@ import Sidebar from './components/Sidebar/Sidebar';
 import ModalContainer from './components/Modal/ModalContainer';
 import Modal from './components/Modal/Modal';
 
-const App = () => {
+const App: FC = () => {
   const [url, setUrl] = useState<string>('');
   const [klusterUrl, setKlusterUrl] = useState<string>('');
   const [podTitle, setPodTitle] = useState<string>('');
@@ -43,7 +43,10 @@ const App = () => {
       />
       <Routes>
         <Route path='/' element={<Home url={url} />} />
-        <Route path='/pods/' element={<Pods url={url} podTitle={podTitle} />} />
+        <Route
+          path='/pods/:pod'
+          element={<Pods url={url} podTitle={podTitle} />}
+        />
       </Routes>
       <ModalContainer modalVisible={modalVisible} />
       <Modal modalVisible={modalVisible} />
