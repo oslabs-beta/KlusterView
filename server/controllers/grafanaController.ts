@@ -1,5 +1,6 @@
 import { MiddlewareFn } from '../types';
 import axios from 'axios';
+import waitPort from 'wait-port';
 
 //CREATING UNIX TIMESTAMP VALUES FOR "FROM" & "TO"
 const timeStamp = () => {
@@ -16,14 +17,16 @@ async function getDashboard(resource: number): Promise<{
   dashboardUri: string;
 }> {
   try {
+    // getAuthToken();
+
     const response = await axios.get(
       'http://admin:admin@localhost:9000/api/search?type=dash-db'
     );
     const dashboards = response.data;
-    const podDashboard = dashboards[resource];
-    const dashboardUid = podDashboard.uid;
-    const length = podDashboard.uri.split('/').length;
-    const dashboardUri = podDashboard.uri.split('/')[length - 1];
+    const dashboard = dashboards[resource];
+    const dashboardUid = dashboard.uid;
+    const length = dashboard.uri.split('/').length;
+    const dashboardUri = dashboard.uri.split('/')[length - 1];
     return { dashboardUid, dashboardUri };
   } catch (error) {
     throw error;
@@ -49,7 +52,7 @@ const getPods: MiddlewareFn = async (req, res, next) => {
 const getCluster: MiddlewareFn = async (req, res, next) => {
   const { from, to } = timeStamp();
   try {
-    const { dashboardUid, dashboardUri } = await getDashboard(0);
+    const { dashboardUid, dashboardUri } = await getDashboard(1);
     const src = 'test';
     res.locals.src = src;
     return next();
@@ -61,5 +64,39 @@ const getCluster: MiddlewareFn = async (req, res, next) => {
     });
   }
 };
+const grafanaHost = 'localhost';
+const grafanaPort = 9000;
+//this function waits for grafana server to start
+//only after that we sign the default user in
+async function waitForServer(): Promise<void> {
+  try {
+    console.log('runs');
+
+    await waitPort({
+      host: grafanaHost,
+      port: grafanaPort,
+    });
+
+    console.log('Grafana server is now running');
+    await signInUser();
+  } catch (error) {}
+}
+//signs the user in with default credentials
+async function signInUser(): Promise<void> {
+  try {
+    const response = await axios.post(
+      `http://${grafanaHost}:${grafanaPort}/login`,
+      {
+        user: 'admin',
+        password: 'admin',
+      }
+    );
+
+    console.log('User signed in successfully');
+  } catch (error) {
+    throw error;
+  }
+}
+waitForServer();
 
 export default { getPods, getCluster };
