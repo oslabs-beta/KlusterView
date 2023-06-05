@@ -5,3 +5,9 @@ export type MiddlewareFn = (
   res: Response,
   next: NextFunction
 ) => void;
+
+export type MethodError = {
+  log: String;
+  status: Number;
+  message: { err: String };
+};
