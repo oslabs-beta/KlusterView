@@ -1,11 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import App from './App.jsx';
+import App from './App';
 import './styles/app.scss';
 import './styles/normalize.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Failed to find root element');
+const root = createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <BrowserRouter>
