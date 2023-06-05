@@ -2,13 +2,18 @@ import React, { useEffect, FC, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
 import './Sidebar.scss';
 
+interface PodInfo {
+  name: string;
+  ip: number;
+}
+
 interface SidebarProps {
   setPodTitle: (podTitle: string) => void;
   setUrl: (url: string) => void;
   url: string;
   klusterUrl: string;
-  podInfo: { name: string; ip: number }[];
-  setPodInfo: (podInfo) => void;
+  podInfo: PodInfo[];
+  setPodInfo: (podInfo: PodInfo[]) => void;
 }
 
 const Sidebar: FC<SidebarProps> = ({
@@ -42,9 +47,9 @@ const Sidebar: FC<SidebarProps> = ({
     setUrl(klusterUrl);
   };
 
-  const handlePodLink = (e: SyntheticEvent) => {
+  const handlePodLink = (e: SyntheticEvent<HTMLAnchorElement>) => {
     // Update page title with pod name
-    const podClassName = e.target.classList[1];
+    const podClassName = e.currentTarget.classList[1];
     const podName = podClassName.slice(4);
     setPodTitle(podClassName);
 
@@ -71,12 +76,10 @@ const Sidebar: FC<SidebarProps> = ({
     setUrl(newUrl);
   };
 
-  const podlinks: JSX.Element[] = podInfo.map(function (pod: {
-    name: string;
-    ip: number;
-  }) {
+  //Create dropdown pod links by mapping through podLinks
+  const podLinks: JSX.Element[] = podInfo.map((pod: PodInfo) => {
     return (
-      <li className='navlink navlink-dropdown'>
+      <li key={pod.name} className='navlink navlink-dropdown'>
         <Link
           className={`link Pod-${pod.name}`}
           to='/pods'
@@ -108,7 +111,7 @@ const Sidebar: FC<SidebarProps> = ({
         </li>
         <li className='navlink'>
           <p className='link link-p'>PODS</p>
-          <ul className='sidebar-list dropdown-content'>{podlinks}</ul>
+          <ul className='sidebar-list dropdown-content'>{podLinks}</ul>
         </li>
       </ul>
     </nav>
