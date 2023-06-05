@@ -9,7 +9,7 @@ const App = () => {
   const [url, setUrl] = useState<string>('');
   const [klusterUrl, setKlusterUrl] = useState<string>('');
   const [podTitle, setPodTitle] = useState<string>('');
-  const [podNames, setPodNames] = useState<{ name: string }[]>([]);
+  const [podInfo, setPodInfo] = useState<{ name: string; ip: number }[]>([]);
 
   const getUrl = async () => {
     // try {
@@ -19,8 +19,8 @@ const App = () => {
     // } catch (error) {
     //   console.log(error);
     // }
-    setUrl('https://picsum.photos/id/237/200/300');
-    setKlusterUrl('https://picsum.photos/id/237/200/300');
+    setUrl('https://picsum.photos/id/237/1537/693');
+    setKlusterUrl('https://picsum.photos/id/237/1537/693');
   };
 
   useEffect(() => {
@@ -34,13 +34,13 @@ const App = () => {
         setPodTitle={setPodTitle}
         url={url}
         setUrl={setUrl}
-        podNames={podNames}
-        setPodNames={setPodNames}
+        podInfo={podInfo}
+        setPodInfo={setPodInfo}
         klusterUrl={klusterUrl}
       />
       <Routes>
         <Route path='/' element={<Home url={url} />} />
-        <Route path='/pods' element={<Pods url={url} podTitle={podTitle} />} />
+        <Route path='/pods/' element={<Pods url={url} podTitle={podTitle} />} />
       </Routes>
     </>
   );

@@ -7,8 +7,8 @@ interface SidebarProps {
   setUrl: (url: string) => void;
   url: string;
   klusterUrl: string;
-  podNames: { name: string }[];
-  setPodNames: (podNames) => void;
+  podInfo: { name: string; ip: number }[];
+  setPodInfo: (podInfo) => void;
 }
 
 const Sidebar: FC<SidebarProps> = ({
@@ -16,10 +16,10 @@ const Sidebar: FC<SidebarProps> = ({
   setUrl,
   url,
   klusterUrl,
-  podNames,
-  setPodNames,
+  podInfo,
+  setPodInfo,
 }) => {
-  const getPodNames = async () => {
+  const getPodInfo = async () => {
     // try {
     //   const res = await fetch('/grafana/pods');
     //   const pods = await res.json();
@@ -27,11 +27,15 @@ const Sidebar: FC<SidebarProps> = ({
     // } catch (error) {
     //   console.log(error);
     // }
-    setPodNames([{ name: '1' }, { name: '2' }, { name: '3' }]);
+    setPodInfo([
+      { name: '1', ip: 345 },
+      { name: '2', ip: 456 },
+      { name: '3', ip: 567 },
+    ]);
   };
 
   useEffect(() => {
-    getPodNames();
+    getPodInfo();
   }, []);
 
   const handleKlusterLink = () => {
@@ -40,21 +44,36 @@ const Sidebar: FC<SidebarProps> = ({
 
   const handlePodLink = (e: SyntheticEvent) => {
     // Update page title with pod name
-    const podName = e.target.classList[1];
-    const podNumber = podName[podName.length - 1];
-    setPodTitle(podName);
+    const podClassName = e.target.classList[1];
+    const podName = podClassName.slice(4);
+    setPodTitle(podClassName);
 
-    //update url by inserting current pod number
+    //update url by inserting current pod number and ip
     const urlIndexStart = url.indexOf('id/') + 3;
     const urlIndexEnd = url.indexOf('/', urlIndexStart);
-    let urlStart = url.slice(0, urlIndexStart);
-    let urlEnd = url.slice(urlIndexEnd);
-    let newUrl = urlStart.concat(podNumber).concat(urlEnd);
+    /*****  Actual URL Code *******
+    const urlIndexStart = url.indexOf('&var-Pod=') + 9;
+    const urlIndexEnd = url.indexOf('&var-phase=', urlIndexStart);
+    ****** Actual URL Insert ******
+    const podInfoKeys = Object.keys(podInfo);
+    const podIndex = podInfoKeys.indexOf(podName);
+    const ipAddress = podInfo[podIndex].ip;
+    const ip = e.target.id;
+    const urlInsert = `${podName}&var-Pod_ip=${ipAddress}`;
+    ******************************/
+    const urlStart = url.slice(0, urlIndexStart);
+    const urlEnd = url.slice(urlIndexEnd);
+
+    const newUrl = urlStart.concat(podName).concat(urlEnd);
+    /***** Actual newUrl **********
+    const newUrl = urlStart.concat(urlInsert).concat(urlEnd)
+    ******************************/
     setUrl(newUrl);
   };
 
-  const podlinks: JSX.Element[] = podNames.map(function (pod: {
+  const podlinks: JSX.Element[] = podInfo.map(function (pod: {
     name: string;
+    ip: number;
   }) {
     return (
       <li className='navlink navlink-dropdown'>
