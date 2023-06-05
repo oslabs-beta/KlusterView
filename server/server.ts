@@ -17,17 +17,17 @@ app.use(bodyParser.json());
 dotenv.config();
 
 //environment variables
-const { MONGO_URI, SERVER_PORT } = process.env;
+// const { MONGO_URI, SERVER_PORT } = process.env;
 
-if (!MONGO_URI) {
-  //type guarding
-  throw new Error('MONGO_URI environment variable is not set');
-}
-//databse connection
-mongoose
-  .connect(MONGO_URI)
-  .then(() => console.log('Database connection started'))
-  .catch((err) => console.log(err));
+// if (!MONGO_URI) {
+//   //type guarding
+//   throw new Error('MONGO_URI environment variable is not set');
+// }
+// //databse connection
+// mongoose
+//   .connect(MONGO_URI)
+//   .then(() => console.log('Database connection started'))
+//   .catch((err) => console.log(err));
 
 //serving up html file
 app.get('/', (req: Request, res: Response) => {
@@ -70,6 +70,6 @@ app.use(
 );
 
 //app starts on port 3000
-app.listen(SERVER_PORT, () => {
-  console.log(`Server started to listen on port ${SERVER_PORT}`);
+app.listen(3000, () => {
+  console.log(`Server started to listen on port 3000`);
 });
