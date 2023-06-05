@@ -7,10 +7,7 @@ statusRouter.get(
   '',
   statusController.checkStatus,
   (req: Request, res: Response) => {
-    return res
-      .status(200)
-      .header('Content-type', 'application/json')
-      .json(res.locals.testResp);
+    return res.status(303).redirect('/');
   }
 );
 
