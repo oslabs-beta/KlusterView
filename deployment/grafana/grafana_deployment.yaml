@@ -39,13 +39,11 @@ spec:
             - name: GF_AUTH_ANONYMOUS_ENABLED
               value: 'true'
             - name: GF_AUTH_ANONYMOUS_ORG_NAME
-              value: default
+              value: Main Org.
             - name: GF_AUTH_ANONYMOUS_ORG_ROLE
               value: Admin
-            - name: GF_AUTH_DISABLE_LOGIN_FORM
-              value: 'false'
-            - name: GF_AUTH_DISABLE_LOGIN
-              value: 'false'
+            - name: GF_AUTH_ANONYMOUS_HIDE_VERSION
+              value: 'true'
       volumes:
         - name: grafana-storage
           emptyDir: {}
