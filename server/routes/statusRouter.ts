@@ -7,12 +7,12 @@ statusRouter.get(
   '',
   statusController.checkStatus,
   (req: Request, res: Response) => {
-    return res.status(303).redirect('/');
+    return res.sendStatus(200);
   }
 );
 
 statusRouter.post(
-  '',
+  '/setup',
   statusController.runSetup,
   statusController.openPorts,
   (req: Request, res: Response) => {
