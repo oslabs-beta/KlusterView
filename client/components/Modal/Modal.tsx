@@ -3,10 +3,10 @@ import './Modal.scss';
 
 interface ModalProps {
   modalVisible: boolean;
-  setModalVisible: (modalVisible: boolean) => void;
+  fetchStatus: (endpoint: string, postRequest: boolean) => void;
 }
 
-const Modal: FC<ModalProps> = ({ modalVisible, setModalVisible }) => {
+const Modal: FC<ModalProps> = ({ modalVisible, fetchStatus }) => {
   const [manual, setManual] = useState<boolean>(false);
 
   const modalStyle: CSSProperties = {
@@ -14,18 +14,16 @@ const Modal: FC<ModalProps> = ({ modalVisible, setModalVisible }) => {
     transform: modalVisible ? 'scale(1)' : 'scale(0.1)',
   };
 
-  const autoSetup = (): void => {
-    setModalVisible(false);
-    //make request
+  const handleAutoSetup = (): void => {
+    fetchStatus('/status/setup', true);
   };
 
-  const manualSetup = (): void => {
+  const handleManualSetup = (): void => {
     setManual(true);
   };
 
-  const postSetup = (): void => {
-    setModalVisible(false);
-    //make request
+  const checkStatus = (): void => {
+    fetchStatus('/status', false);
   };
 
   return (
@@ -45,17 +43,17 @@ const Modal: FC<ModalProps> = ({ modalVisible, setModalVisible }) => {
           </h3>
           <div className='modal-buttons'>
             {!manual && (
-              <button className='btn' onClick={autoSetup}>
+              <button className='btn' onClick={handleAutoSetup}>
                 Setup For Me
               </button>
             )}
             {!manual && (
-              <button className='btn btn--outline' onClick={manualSetup}>
+              <button className='btn btn--outline' onClick={handleManualSetup}>
                 Setup Myself
               </button>
             )}
             {manual && (
-              <button className='btn' onClick={postSetup}>
+              <button className='btn' onClick={checkStatus}>
                 Yes, I've finished!
               </button>
             )}
