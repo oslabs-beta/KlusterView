@@ -10,3 +10,5 @@ echo $parentdir
 for filename in $parentdir/deployment/_temp/*.txt; do
   echo $(<$filename)
 done
+touch 'TESTINGTEST.txt'
+echo "current_dir is $current_dir"

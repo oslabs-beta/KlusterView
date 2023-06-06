@@ -7,6 +7,8 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 import promRouter from './routes/promRouter';
 import grafanaRouter from './routes/grafanaRouter';
+import statusRouter from './routes/statusRouter';
+import { MethodError } from './types';
 
 const app = express();
 app.use(express.json());
@@ -40,6 +42,9 @@ app.use('/prom', promRouter);
 //Grafana router gets visualization items from Grafana Dashboard
 app.use('/grafana', grafanaRouter);
 
+//Status router checks Kubernetes status and takes action as appropriate
+app.use('/status', statusRouter);
+
 //404 Handler
 app.use('*', (req: Request, res: Response) => {
   console.log('run');
@@ -47,15 +52,23 @@ app.use('*', (req: Request, res: Response) => {
 });
 
 //global error handler
-app.use((err: Errback, req: Request, res: Response, next: NextFunction) => {
-  const defaultErr = {
-    log: 'Express error handler caught unknown middleware error',
-    status: 400,
-    message: { err: 'An error occurred' },
-  };
-  const errorObj = Object.assign(defaultErr, err);
-  return res.status(errorObj.status).json(errorObj.message);
-});
+app.use(
+  (
+    err: Errback | MethodError,
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const defaultErr = {
+      log: 'Express error handler caught unknown middleware error',
+      status: 400,
+      message: { err: 'An unknown error occurred' }
+    };
+    const errorObj = Object.assign(defaultErr, err);
+    console.log(errorObj.log);
+    return res.status(errorObj.status).json(errorObj.message);
+  }
+);
 
 //app starts on port 3000
 app.listen(3000, () => {
