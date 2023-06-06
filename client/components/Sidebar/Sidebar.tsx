@@ -26,9 +26,9 @@ const Sidebar: FC<SidebarProps> = ({
 }) => {
   const getPodInfo = async () => {
     // try {
-    //   const res = await fetch('/grafana/pods');
+    //   const res = await fetch('/prom/pods');
     //   const pods = await res.json();
-    //   setPodNames(pods);
+    //   setPodInfo(pods);
     // } catch (error) {
     //   console.log(error);
     // }
