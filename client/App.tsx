@@ -14,11 +14,41 @@ const App: FC = () => {
   const [podInfo, setPodInfo] = useState<{ name: string; ip: number }[]>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
+  /*
+  ///////   Check Status   ////////
+  ///////////////////////////////////////////////
+  const fetchStatus = async (endpoint, post) => {
+    try {
+      const res = !post
+        ? await fetch(endpoint)
+        : await fetch(endpoint, {
+            method: 'Post',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+      if (res.ok) {
+        getUrl();
+        setModalVisible(false);
+      } else {
+        setModalVisible(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchStatus('/status', false);
+  }, []);
+  */
+
   const getUrl = async () => {
     // try {
     //   const res = await fetch('/grafana/dashboard');
     //   const url = await res.json();
     //   setUrl(url);
+    //   setKlusterUrl(url)
     // } catch (error) {
     //   console.log(error);
     // }
@@ -48,8 +78,9 @@ const App: FC = () => {
           element={<Pods url={url} podTitle={podTitle} />}
         />
       </Routes>
-      <ModalContainer modalVisible={modalVisible} />
-      <Modal modalVisible={modalVisible} setModalVisible={setModalVisible} />
+
+      {/* <ModalContainer modalVisible={modalVisible} />
+      <Modal modalVisible={modalVisible} fetchStatus={fetchStatus} /> */}
     </>
   );
 };
