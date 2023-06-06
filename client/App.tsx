@@ -49,7 +49,7 @@ const App: FC = () => {
         />
       </Routes>
       <ModalContainer modalVisible={modalVisible} />
-      <Modal modalVisible={modalVisible} />
+      <Modal modalVisible={modalVisible} setModalVisible={setModalVisible} />
     </>
   );
 };

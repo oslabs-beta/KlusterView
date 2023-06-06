@@ -14,7 +14,6 @@ interface SidebarProps {
   klusterUrl: string;
   podInfo: PodInfo[];
   setPodInfo: (podInfo: PodInfo[]) => void;
-  match: any;
 }
 
 const Sidebar: FC<SidebarProps> = ({
@@ -24,7 +23,6 @@ const Sidebar: FC<SidebarProps> = ({
   klusterUrl,
   podInfo,
   setPodInfo,
-  match,
 }) => {
   const getPodInfo = async () => {
     // try {
