@@ -36,7 +36,7 @@ async function getDashboard(resource: number): Promise<{
 const getPods: MiddlewareFn = async (req, res, next) => {
   const { from, to } = timeStamp();
   try {
-    const { dashboardUid, dashboardUri } = await getDashboard(0);
+    const { dashboardUid, dashboardUri } = await getDashboard(1);
     const src = `http://localhost:9000/d/${dashboardUid}/${dashboardUri}/?orgId=1&refresh=30s&var-Node=All&var-Pod=All&var-Pod_ip=192.168.49.2&from=${from}&to=${to}`;
     res.locals.src = src;
     return next();
@@ -52,7 +52,7 @@ const getPods: MiddlewareFn = async (req, res, next) => {
 const getCluster: MiddlewareFn = async (req, res, next) => {
   const { from, to } = timeStamp();
   try {
-    const { dashboardUid, dashboardUri } = await getDashboard(1);
+    const { dashboardUid, dashboardUri } = await getDashboard(0);
     const src = `http://localhost:9000/d/${dashboardUid}/${dashboardUri}/?orgId=1&refresh=30sfrom=${from}&to=${to}`;
     res.locals.src = src;
     return next();

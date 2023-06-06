@@ -16,7 +16,7 @@ grafanaRouter.get(
 );
 // this route get cluster/main dashboard
 grafanaRouter.get(
-  '/cluster',
+  '/dashboard',
   grafanaController.getCluster,
   (req: Request, res: Response) => {
     if (res.locals.src) {
