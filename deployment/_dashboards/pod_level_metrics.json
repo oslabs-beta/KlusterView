@@ -20,7 +20,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 747,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 6,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -59,8 +59,8 @@
       "error": false,
       "gridPos": {
         "h": 5,
-        "w": 6,
-        "x": 1,
+        "w": 4,
+        "x": 0,
         "y": 1
       },
       "height": "1px",
@@ -76,7 +76,7 @@
         "content": "# $Pod_ip",
         "mode": "markdown"
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "style": {
         "font-size": "72pt"
       },
@@ -97,13 +97,24 @@
         "type": "prometheus",
         "uid": "P1809F7CD0C75ACF3"
       },
-      "description": "",
+      "description": "1=Running.\n!!!=Not Running.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "dark-red",
+                  "index": 0,
+                  "text": "!!!"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -122,8 +133,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
-        "x": 9,
+        "w": 9,
+        "x": 4,
         "y": 1
       },
       "id": 35,
@@ -134,15 +145,13 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "value"
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
@@ -150,9 +159,12 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
+          "exemplar": false,
           "expr": "kube_pod_status_phase{phase=\"Running\", pod=~\"^$Pod$\"}",
+          "instant": true,
+          "interval": "",
           "legendFormat": "__auto",
-          "range": true,
+          "range": false,
           "refId": "A"
         }
       ],
@@ -164,6 +176,7 @@
         "type": "prometheus",
         "uid": "P1809F7CD0C75ACF3"
       },
+      "description": "!!! - Many Restarts",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -174,10 +187,23 @@
               "options": {
                 "match": "null",
                 "result": {
+                  "index": 0,
                   "text": "N/A"
                 }
               },
               "type": "special"
+            },
+            {
+              "options": {
+                "from": 10,
+                "result": {
+                  "color": "dark-red",
+                  "index": 1,
+                  "text": "!!!"
+                },
+                "to": 100
+              },
+              "type": "range"
             }
           ],
           "thresholds": {
@@ -199,28 +225,26 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
-        "x": 17,
+        "w": 9,
+        "x": 14,
         "y": 1
       },
       "id": 41,
       "links": [],
       "maxDataPoints": 100,
       "options": {
-        "colorMode": "none",
+        "colorMode": "value",
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": ["mean"],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "value"
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
@@ -230,6 +254,7 @@
           "editorMode": "code",
           "expr": "kube_pod_container_status_restarts_total{pod=~\"$Pod.*$\"}",
           "intervalFactor": 2,
+          "legendFormat": "__auto",
           "range": true,
           "refId": "A",
           "step": 40
@@ -309,8 +334,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 12,
+        "h": 7,
+        "w": 10,
         "x": 0,
         "y": 7
       },
@@ -320,16 +345,14 @@
       "options": {
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
@@ -337,7 +360,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum (container_memory_working_set_bytes{pod=~\"^$Pod$\"}) / sum (machine_memory_bytes{kubernetes_io_hostname=~\"^$Node$\"}) * 100",
+          "expr": "sum (container_memory_working_set_bytes{pod=~\"^$Pod$\"}) / sum (kube_node_status_allocatable{kubernetes_io_hostname=~\"^$Node$\",resource=\"memory\", unit=\"byte\"}) * 100",
           "interval": "10s",
           "intervalFactor": 1,
           "range": true,
@@ -394,27 +417,25 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 12,
-        "x": 12,
+        "h": 7,
+        "w": 14,
+        "x": 10,
         "y": 7
       },
       "id": 6,
       "links": [],
       "maxDataPoints": 100,
       "options": {
-        "orientation": "horizontal",
+        "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
@@ -425,9 +446,22 @@
           "expr": "sum (rate (container_cpu_usage_seconds_total{pod=~\"^$Pod$\"}[1m])) / sum (machine_cpu_cores{kubernetes_io_hostname=~\"^$Node$\"}) * 100",
           "interval": "10s",
           "intervalFactor": 1,
+          "legendFormat": "Usage Efficiency",
           "range": true,
           "refId": "A",
           "step": 10
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P1809F7CD0C75ACF3"
+          },
+          "editorMode": "code",
+          "expr": "sum (rate (container_cpu_usage_seconds_total{pod=~\"^$Pod$\"}[1m])) / sum (kube_pod_container_resource_limits{kubernetes_io_hostname=~\"^$Node$\", resource='cpu'}) * 100",
+          "hide": false,
+          "legendFormat": "Allocation Efficiency",
+          "range": true,
+          "refId": "B"
         }
       ],
       "title": "Pod CPU usage",
@@ -473,9 +507,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 6,
+        "w": 5,
         "x": 0,
-        "y": 12
+        "y": 14
       },
       "id": 36,
       "links": [],
@@ -486,15 +520,13 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": ["mean"],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
@@ -552,9 +584,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 6,
-        "x": 6,
-        "y": 12
+        "w": 5,
+        "x": 5,
+        "y": 14
       },
       "id": 37,
       "links": [],
@@ -565,23 +597,23 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": ["mean"],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
-          "expr": "sum (machine_memory_bytes{kubernetes_io_hostname=~\"^$Node$\"})",
+          "editorMode": "code",
+          "expr": "sum (kube_node_status_allocatable{node=~\"^$Node.*$\", resource=\"memory\", unit=\"byte\"})",
           "intervalFactor": 2,
+          "range": true,
           "refId": "A",
           "step": 40
         }
@@ -629,9 +661,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 6,
-        "x": 12,
-        "y": 12
+        "w": 7,
+        "x": 10,
+        "y": 14
       },
       "id": 38,
       "links": [],
@@ -642,15 +674,13 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": ["mean"],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
@@ -708,9 +738,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 6,
-        "x": 18,
-        "y": 12
+        "w": 7,
+        "x": 17,
+        "y": 14
       },
       "id": 39,
       "links": [],
@@ -721,15 +751,13 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": ["mean"],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
@@ -746,87 +774,6 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 2,
-          "mappings": [
-            {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "bytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 24,
-        "x": 0,
-        "y": 15
-      },
-      "id": 9,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "none",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.5.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
-          "editorMode": "code",
-          "expr": "sum (container_memory_working_set_bytes{pod=~\"^$Pod$\"})",
-          "interval": "10s",
-          "intervalFactor": 1,
-          "range": true,
-          "refId": "A",
-          "step": 10
-        }
-      ],
-      "title": "Pod memory working bytes",
-      "type": "stat"
-    },
-    {
       "collapsed": false,
       "datasource": {
         "type": "datasource",
@@ -836,7 +783,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 17
       },
       "id": 45,
       "panels": [],
@@ -913,7 +860,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 18
       },
       "id": 17,
       "links": [],
@@ -937,7 +884,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum (rate (container_cpu_usage_seconds_total{pod=~\"^$Pod$\"}[1m])) by (io_kubernetes_pod_name)",
+          "expr": "sum (rate (container_cpu_usage_seconds_total{pod=~\"^$Pod$\"}[5m])) by (io_kubernetes_pod_name)",
           "interval": "10s",
           "intervalFactor": 1,
           "legendFormat": "{{ io_kubernetes_pod_name }}",
@@ -960,7 +907,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 25
       },
       "id": 47,
       "panels": [],
@@ -995,7 +942,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 26
       },
       "hiddenSeries": false,
       "id": 25,
@@ -1020,7 +967,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1080,9 +1027,7 @@
   "refresh": "10s",
   "schemaVersion": 38,
   "style": "dark",
-  "tags": [
-    "kubernetes"
-  ],
+  "tags": ["kubernetes"],
   "templating": {
     "list": [
       {
@@ -1161,7 +1106,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -1177,20 +1122,10 @@
       "2h",
       "1d"
     ],
-    "time_options": [
-      "5m",
-      "15m",
-      "1h",
-      "6h",
-      "12h",
-      "24h",
-      "2d",
-      "7d",
-      "30d"
-    ]
+    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
   },
   "timezone": "browser",
-  "title": "POD",
+  "title": "test",
   "uid": "test",
   "version": 1,
   "weekStart": ""
