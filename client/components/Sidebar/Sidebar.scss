@@ -3,12 +3,13 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  height: 100vh;
+  height: 84vh;
   width: 13rem;
   color: white;
   position: fixed;
   left: 0;
   margin-left: 2rem;
+  overflow-y: hidden;
 }
 
 .sidebar-list {
@@ -59,6 +60,7 @@
   transition: opacity 0.6s;
   overflow-y: scroll;
   font-size: 1rem;
+  max-height: 30rem;
 }
 
 .navlink:hover {
@@ -72,8 +74,9 @@
 .navlink-dropdown {
   border-color: rgb(44, 118, 126);
   margin: 0.5rem 0;
-  height: 4rem;
+  height: 4.5rem;
   border-radius: 0.5rem;
+  padding: 0.1rem;
 
   a {
     font-weight: normal;
@@ -86,12 +89,12 @@
 }
 
 ::-webkit-scrollbar {
-  width: 0.3rem;
+  width: 0.7rem;
   height: 20%;
 }
 
 ::-webkit-scrollbar-track {
-  background: black;
+  background: transparent;
   box-shadow: inset 0 0 0.2rem cyan;
 }
 
