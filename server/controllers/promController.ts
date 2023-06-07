@@ -17,7 +17,9 @@ const getPodNames: MiddlewareFn = async (req, res, next) => {
     );
 
     const podMetrics = response.data.data.result as PodMetric[];
-    const podNames: string[] = podMetrics.map((item) => item.metric.pod);
+    const podNames: { name: string; ip: string }[] = podMetrics.map((item) => {
+      return { name: item.metric.pod, ip: item.metric.pod_ip };
+    });
 
     res.locals.names = podNames;
     return next();
