@@ -50,7 +50,7 @@ const getPods: MiddlewareFn = async (req, res, next) => {
     return next({
       log: 'Express error handler caught getPods middleware error',
       status: 404,
-      message: { err: 'Could not find the dashboard' }
+      message: { err: 'Could not find the dashboard' },
     });
   }
 };
@@ -66,7 +66,7 @@ const getCluster: MiddlewareFn = async (req, res, next) => {
     return next({
       log: 'Express error handler caught getPods middleware error',
       status: 404,
-      message: { err: 'Could not find the dashboard' }
+      message: { err: 'Could not find the dashboard' },
     });
   }
 };
