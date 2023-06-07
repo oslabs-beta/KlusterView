@@ -72,11 +72,8 @@ const App: FC = () => {
         klusterUrl={klusterUrl}
       />
       <Routes>
-        <Route path='/' element={<Home url={url} />} />
-        <Route
-          path='/pods/:pod'
-          element={<Pods url={url} podTitle={podTitle} />}
-        />
+        <Route index path='/' element={<Home url={url} />} />
+        <Route path='/pods' element={<Pods url={url} podTitle={podTitle} />} />
       </Routes>
 
       {/* <ModalContainer modalVisible={modalVisible} />

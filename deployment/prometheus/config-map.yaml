@@ -4,7 +4,7 @@ metadata:
   name: prometheus-server-conf
   labels:
     name: prometheus-server-conf
-  namespace: monitoring
+  namespace: monitoring-kv
 data:
   prometheus.rules: |-
     groups:
