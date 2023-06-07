@@ -11,6 +11,8 @@ interface SidebarProps {
   setPodTitle: (podTitle: string) => void;
   setUrl: (url: string) => void;
   url: string;
+  podsUrl: string;
+  setPodsUrl: (podsUrl: string) => void;
   klusterUrl: string;
   podInfo: PodInfo[];
   setPodInfo: (podInfo: PodInfo[]) => void;
@@ -20,6 +22,8 @@ const Sidebar: FC<SidebarProps> = ({
   setPodTitle,
   setUrl,
   url,
+  podsUrl,
+  setPodsUrl,
   klusterUrl,
   podInfo,
   setPodInfo,
@@ -33,11 +37,6 @@ const Sidebar: FC<SidebarProps> = ({
     } catch (error) {
       console.log(error);
     }
-    // setPodInfo([
-    //   { name: '1', ip: 345 },
-    //   { name: '2', ip: 456 },
-    //   { name: '3', ip: 567 },
-    // ]);
   };
 
   useEffect(() => {
@@ -51,36 +50,25 @@ const Sidebar: FC<SidebarProps> = ({
   // const handlePodLink = (e: SyntheticEvent<HTMLAnchorElement>) => {
   const handlePodLink = (e: MouseEventHandler<HTMLLIElement>) => {
     // Update page title with pod name
-    console.log(e);
+    console.log('base event:', e);
     const podClassName = e.target.classList[1];
     const podName = podClassName.slice(4);
     setPodTitle(podClassName);
 
     //update url by inserting current pod number and ip
-    // const urlIndexStart = url.indexOf('id/') + 3;
-    // const urlIndexEnd = url.indexOf('/', urlIndexStart);
-    // /*****  Actual URL Code *******
-    console.log(klusterUrl);
-    const urlIndexStart = klusterUrl.indexOf('&var-Pod=') + 9;
-    const urlIndexEnd = klusterUrl.indexOf('&var-phase=', urlIndexStart);
-    // ****** Actual URL Insert ******
+    const urlIndexStart = podsUrl.indexOf('&var-Pod=') + 9;
+    const urlIndexEnd = podsUrl.indexOf('&var-phase=', urlIndexStart);
+    // Create URL Insert
     const podInfoKeys = Object.keys(podInfo);
     let names = podInfo.map((item) => item.name);
     const podIndex = names.indexOf(podName);
     const ipAddress = podInfo[podIndex].ip;
-    console.log(ipAddress);
-    // const ip = e.target.id;
     const urlInsert = `${podName}&var-Pod_ip=${ipAddress}`;
-    // ******************************/
-    const urlStart = klusterUrl.slice(0, urlIndexStart);
-    const urlEnd = klusterUrl.slice(urlIndexEnd);
-
-    // const newUrl = urlStart.concat(podName).concat(urlEnd);
-    // /***** Actual newUrl **********
+    // Create newURL
+    const urlStart = podsUrl.slice(0, urlIndexStart);
+    const urlEnd = podsUrl.slice(urlIndexEnd);
     const newUrl = urlStart.concat(urlInsert).concat(urlEnd);
-    console.log(newUrl);
-    // ******************************/
-    setUrl(newUrl);
+    setPodsUrl(newUrl);
   };
 
   //Create dropdown pod links by mapping through podLinks
@@ -95,7 +83,6 @@ const Sidebar: FC<SidebarProps> = ({
           key={pod.name}
           className={`link Pod-${pod.name}`}
           to={`/pods/${pod.name}`}
-          // onClick={handlePodLink}
         >
           {pod.name}
         </Link>
