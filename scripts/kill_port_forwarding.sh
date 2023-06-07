@@ -6,7 +6,8 @@ echo "current_dir is $current_dir"
 parentdir="$(dirname "$current_dir")"
 echo $parentdir
 
-#Kill port forwarding for saved PIDs
-for process_file in $parentdir/deployment/_temp/*.pid; do
-  kill -9 $(<$process_file);
-done
+echo "Killing Grafana forwarding..."
+ps -ef | grep kubectl | grep port-forward | grep graf | awk '{print $2}' | xargs -r kill -9
+
+echo "Killing Prom forwarding..."
+ps -ef | grep kubectl | grep port-forward | grep prom | awk '{print $2}' | xargs -r kill -9

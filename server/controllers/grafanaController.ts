@@ -44,7 +44,7 @@ const getPods: MiddlewareFn = async (req, res, next) => {
     return next({
       log: 'Express error handler caught getPods middleware error',
       status: 404,
-      message: { err: 'Could not find the dashboard' },
+      message: { err: 'Could not find the dashboard' }
     });
   }
 };
@@ -60,7 +60,7 @@ const getCluster: MiddlewareFn = async (req, res, next) => {
     return next({
       log: 'Express error handler caught getPods middleware error',
       status: 404,
-      message: { err: 'Could not find the dashboard' },
+      message: { err: 'Could not find the dashboard' }
     });
   }
 };
@@ -74,7 +74,7 @@ async function waitForServer(): Promise<void> {
 
     await waitPort({
       host: grafanaHost,
-      port: grafanaPort,
+      port: grafanaPort
     });
 
     console.log('Grafana server is now running');
@@ -88,7 +88,7 @@ async function signInUser(): Promise<void> {
       `http://${grafanaHost}:${grafanaPort}/login`,
       {
         user: 'admin',
-        password: 'admin',
+        password: 'admin'
       }
     );
 
@@ -97,6 +97,6 @@ async function signInUser(): Promise<void> {
     throw error;
   }
 }
-waitForServer();
+//waitForServer();
 
 export default { getPods, getCluster };
