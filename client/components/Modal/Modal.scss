@@ -1,0 +1,79 @@
+.modal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  z-index: 2;
+}
+
+.modal {
+  color: white;
+  background-color: #414141;
+  box-shadow: 0 4px 15px 0 rgb(0, 255, 255);
+  border: 2px solid cyan;
+  width: 60vh;
+  height: 60vh;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  margin: auto;
+  z-index: 3;
+  box-sizing: border-box;
+  //   transform: scale(0.1);
+  //   visibility: hidden;
+  //   transition: transform 0.4s, visibility 0.05s ease-in-out;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.modal-title {
+  text-align: center;
+  font-size: 3.5rem;
+  color: white;
+  text-shadow: 1px 1px 1px rgb(41, 174, 174);
+}
+
+.modal-buttons-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: rgb(41, 174, 174);
+  margin: 6rem 0 1.5rem;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+
+  button {
+    margin: 0 1rem;
+  }
+
+  button:hover {
+    transform: scale(1.03);
+  }
+}
+
+.btn {
+  background-color: cyan;
+  border: 2px solid cyan;
+  border-radius: 0.75rem;
+  color: black;
+  font-weight: bold;
+  font-size: 1.5rem;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+}
+
+.btn--outline {
+  background-color: transparent;
+  color: cyan;
+}
