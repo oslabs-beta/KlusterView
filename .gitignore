@@ -6,3 +6,4 @@ _temp_dev_files
 .dsStore
 **/.dsStore
 deployment/_temp
+**/_deprecated

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana
-  namespace: monitoring
+  namespace: monitoring-kv
 spec:
   replicas: 1
   selector:
@@ -44,6 +44,8 @@ spec:
               value: Admin
             - name: GF_AUTH_ANONYMOUS_HIDE_VERSION
               value: 'true'
+            - name: GF_FEATURE_TOGGLES_ENABLE
+              value: publicDashboards
       volumes:
         - name: grafana-storage
           emptyDir: {}

@@ -7,9 +7,9 @@ parentdir="$(dirname "$current_dir")"
 echo $parentdir
 
 
-echo "Ensuring namespace monitoring exists..."
-kubectl delete namespace monitoring --ignore-not-found
-kubectl create namespace monitoring
+echo "Ensuring namespace monitoring-kv exists..."
+#kubectl delete namespace monitoring-kv --ignore-not-found
+kubectl create namespace monitoring-kv --dry-run=client -o yaml | kubectl apply -f -
 
 echo "Enabling Kube State Metrics..."
 kubectl apply -f $parentdir/deployment/kube_state_metrics/

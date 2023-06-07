@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './styles/app.scss';
 import './styles/normalize.css';
+import Pods from './pages/Pods';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Failed to find root element');

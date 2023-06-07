@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: grafana-datasources
-  namespace: monitoring
+  namespace: monitoring-kv
 data:
   prometheus.yaml: |-
     {
@@ -14,7 +14,7 @@ data:
                 "name": "prometheus",
                 "orgId": 1,
                 "type": "prometheus",
-                "url": "http://prometheus-service.monitoring.svc:8080",
+                "url": "http://prometheus-service.monitoring-kv.svc:8080",
                 "version": 1
             }
         ]
