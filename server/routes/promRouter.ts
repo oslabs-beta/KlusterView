@@ -6,9 +6,9 @@ const promRouter = express.Router();
 promRouter.get(
   '/pods/',
   promController.getPodNames,
-  promController.getpodIP,
+  // promController.getpodIP,
   (req: Request, res: Response) => {
-    return res.status(200).json(res.locals);
+    return res.status(200).json(res.locals.names);
   }
 );
 
