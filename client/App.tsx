@@ -44,16 +44,16 @@ const App: FC = () => {
   */
 
   const getUrl = async () => {
-    // try {
-    //   const res = await fetch('/grafana/dashboard');
-    //   const url = await res.json();
-    //   setUrl(url);
-    //   setKlusterUrl(url)
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    setUrl('https://picsum.photos/id/237/1537/693');
-    setKlusterUrl('https://picsum.photos/id/237/1537/693');
+    try {
+      const res = await fetch('/grafana/dashboard');
+      const url = await res.json();
+      setUrl(url);
+      setKlusterUrl(url);
+    } catch (error) {
+      console.log(error);
+    }
+    // setUrl('https://picsum.photos/id/237/1537/693');
+    // setKlusterUrl('https://picsum.photos/id/237/1537/693');
   };
 
   useEffect(() => {
@@ -72,11 +72,8 @@ const App: FC = () => {
         klusterUrl={klusterUrl}
       />
       <Routes>
-        <Route path='/' element={<Home url={url} />} />
-        <Route
-          path='/pods/:pod'
-          element={<Pods url={url} podTitle={podTitle} />}
-        />
+        <Route index path='/' element={<Home url={url} />} />
+        <Route path='/pods' element={<Pods url={url} podTitle={podTitle} />} />
       </Routes>
 
       {/* <ModalContainer modalVisible={modalVisible} />

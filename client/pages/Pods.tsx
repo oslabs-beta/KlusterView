@@ -8,6 +8,8 @@ interface PodsProps {
 }
 
 const Pods: FC<PodsProps> = ({ url, podTitle }) => {
+  console.log(url, podTitle);
+
   return (
     <div className='page'>
       <h1 className='page-title'>{podTitle} Metrics</h1>

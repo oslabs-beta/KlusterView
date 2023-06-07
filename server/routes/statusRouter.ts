@@ -1,20 +1,22 @@
 import express, { Request, Response } from 'express';
 import statusController from '../controllers/statusController';
+import initializationController from '../controllers/initializationController';
 
 const statusRouter = express.Router();
 
 statusRouter.get(
   '',
   statusController.checkStatus,
+  initializationController.initializeGrafana,
+  initializationController.login,
   (req: Request, res: Response) => {
-    return res.status(303).redirect('/');
+    return res.sendStatus(200);
   }
 );
 
 statusRouter.post(
-  '',
+  '/setup',
   statusController.runSetup,
-  statusController.openPorts,
   (req: Request, res: Response) => {
     return res.sendStatus(200);
   }

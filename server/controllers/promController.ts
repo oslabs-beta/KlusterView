@@ -1,5 +1,6 @@
 import { MiddlewareFn } from '../types';
 import axios from 'axios';
+import { getNodeIPs } from './initializationController';
 
 interface PodMetric {
   metric: {
@@ -8,16 +9,22 @@ interface PodMetric {
   };
 }
 
+const IPList = getNodeIPs();
+const PROM_IP = IPList[0];
+const PROM_NODE_PORT = '30000';
+
 const getPodNames: MiddlewareFn = async (req, res, next) => {
   try {
     console.log('Trying to retrieve pod names');
 
     const response = await axios.get(
-      'http://localhost:9999/api/v1/query?query=kube_pod_info'
+      `http://${PROM_IP}:${PROM_NODE_PORT}/api/v1/query?query=kube_pod_info`
     );
 
     const podMetrics = response.data.data.result as PodMetric[];
-    const podNames: string[] = podMetrics.map((item) => item.metric.pod);
+    const podNames: { name: string; ip: string }[] = podMetrics.map((item) => {
+      return { name: item.metric.pod, ip: item.metric.pod_ip };
+    });
 
     res.locals.names = podNames;
     return next();
@@ -32,7 +39,7 @@ const getpodIP: MiddlewareFn = async (req, res, next) => {
     console.log('trying to retrieve ip');
 
     const response = await axios.get(
-      'http://localhost:9999/api/v1/query?query=kube_pod_info'
+      `http://${PROM_IP}:${PROM_NODE_PORT}/api/v1/query?query=kube_pod_info`
     );
 
     const podMetrics = response.data.data.result as PodMetric[];
