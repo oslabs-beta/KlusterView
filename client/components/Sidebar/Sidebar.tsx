@@ -51,15 +51,17 @@ const Sidebar: FC<SidebarProps> = ({
 
   const handlePodLink = (e: MouseEventHandler<HTMLLIElement>) => {
     // Update page title with pod name
-    console.log('base event:', e);
     const podClassName = e.target.classList[1];
     const podName = podClassName.slice(4);
-    setPodTitle(podClassName);
+    if (podName !== 'down-content' && podName !== 'ink-dropdown')
+      setPodTitle(podClassName);
 
     //update url for all pods metrics if PODS was clicked
     if (podName === 'All') {
       setPodsUrl(allPodsUrl);
       ////Else update url by inserting current pod number and ip
+    } else if (podName === 'down-content' || podName === 'ink-dropdown') {
+      return;
     } else {
       //Find indexes of url to add url insert
       const urlIndexStart = podsUrl.indexOf('&var-Pod=') + 9;
@@ -86,11 +88,7 @@ const Sidebar: FC<SidebarProps> = ({
         className='navlink navlink-dropdown'
         onClick={handlePodLink}
       >
-        <Link
-          key={pod.name}
-          className={`link Pod-${pod.name}`}
-          to={`/pods/${pod.name}`}
-        >
+        <Link className={`link Pod-${pod.name}`} to={`/pods/${pod.name}`}>
           {pod.name}
         </Link>
       </li>
