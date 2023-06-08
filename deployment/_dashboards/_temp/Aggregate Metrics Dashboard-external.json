@@ -13,6 +13,12 @@
   "__requires": [
     {
       "type": "panel",
+      "id": "bargauge",
+      "name": "Bar gauge",
+      "version": ""
+    },
+    {
+      "type": "panel",
       "id": "gauge",
       "name": "Gauge",
       "version": ""
@@ -21,7 +27,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "9.5.2"
+      "version": ""
     },
     {
       "type": "datasource",
@@ -68,9 +74,22 @@
   "liveNow": false,
   "panels": [
     {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 16,
+      "panels": [],
+      "title": "Resource Usage (Current)",
+      "type": "row"
+    },
+    {
       "datasource": {
         "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -115,7 +134,7 @@
         "h": 5,
         "w": 8,
         "x": 0,
-        "y": 0
+        "y": 1
       },
       "id": 1,
       "links": [],
@@ -123,19 +142,21 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "sum (container_memory_working_set_bytes{pod=~\"^$Deployment$.*$\", kubernetes_io_hostname=~\"^$Node$\"}) / sum (kube_node_status_allocatable{pod=~\"^$Deployment.*$\",node=~\"^$Node$\", resource=\"memory\", unit=\"byte\"}) * 100",
@@ -150,7 +171,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "sum (kube_pod_container_resource_requests{resource=\"memory\", unit=\"byte\", pod=~\"^$Deployment.*$\", kubernetes_io_hostname=~\"^$Node$\"}) / sum (kube_node_status_allocatable{node=~\"^$Node.*$\", resource=\"memory\", unit=\"byte\"}) * 100",
@@ -167,7 +188,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -214,7 +235,7 @@
         "h": 5,
         "w": 8,
         "x": 8,
-        "y": 0
+        "y": 1
       },
       "id": 2,
       "links": [],
@@ -222,19 +243,21 @@
       "options": {
         "orientation": "vertical",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "sum (rate (container_cpu_usage_seconds_total{pod=~\"^$Deployment.*$\", kubernetes_io_hostname=~\"^$Node$\"}[1m])) / sum(kube_node_status_allocatable{resource=\"cpu\", unit=\"core\",node=~\"^$Node$\"}) * 100",
@@ -246,7 +269,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -264,7 +287,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -283,7 +306,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -328,7 +351,7 @@
         "h": 5,
         "w": 8,
         "x": 16,
-        "y": 0
+        "y": 1
       },
       "id": 3,
       "links": [],
@@ -336,19 +359,21 @@
       "options": {
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "((sum(kube_deployment_status_replicas{deployment=~\".*$Deployment\"}) or vector(0)) - (sum(kube_deployment_status_replicas_available{deployment=~\".*$Deployment\"}) or vector(0))) / (sum(kube_deployment_status_replicas{deployment=~\".*$Deployment\"}) or vector(0))  * 100",
@@ -365,7 +390,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -404,7 +429,7 @@
         "h": 3,
         "w": 4,
         "x": 0,
-        "y": 5
+        "y": 6
       },
       "id": 4,
       "links": [],
@@ -415,18 +440,20 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "sum (container_memory_working_set_bytes{pod_name=~\"^$Deployment.*$\", kubernetes_io_hostname=~\"^$Node$\"})",
@@ -443,7 +470,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -482,7 +509,7 @@
         "h": 3,
         "w": 4,
         "x": 4,
-        "y": 5
+        "y": 6
       },
       "id": 5,
       "links": [],
@@ -493,18 +520,20 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "sum (kube_node_status_allocatable{node=~\"^$Node.*$\", resource=\"memory\", unit=\"byte\"})",
@@ -521,7 +550,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -560,7 +589,7 @@
         "h": 3,
         "w": 4,
         "x": 8,
-        "y": 5
+        "y": 6
       },
       "id": 6,
       "links": [],
@@ -571,18 +600,20 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "sum (rate (container_cpu_usage_seconds_total{pod=~\"^$Deployment.*$\", kubernetes_io_hostname=~\"^$Node$\", namespace=~\"$Namespace.*$\"}[1m]))",
@@ -599,7 +630,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -638,7 +669,7 @@
         "h": 3,
         "w": 4,
         "x": 12,
-        "y": 5
+        "y": 6
       },
       "id": 7,
       "links": [],
@@ -649,18 +680,20 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["mean"],
+          "calcs": [
+            "mean"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum (machine_cpu_cores{kubernetes_io_hostname=~\"^$Node$\"})",
           "intervalFactor": 2,
@@ -674,7 +707,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -713,7 +746,7 @@
         "h": 3,
         "w": 4,
         "x": 16,
-        "y": 5
+        "y": 6
       },
       "id": 8,
       "links": [],
@@ -724,18 +757,20 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "(sum(kube_deployment_status_replicas_available{deployment=~\".*$Deployment\"}) or vector(0))",
@@ -752,7 +787,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -791,7 +826,7 @@
         "h": 3,
         "w": 4,
         "x": 20,
-        "y": 5
+        "y": 6
       },
       "id": 9,
       "links": [],
@@ -802,18 +837,20 @@
         "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "(sum(kube_deployment_status_replicas{deployment=~\".*$Deployment\"}) or vector(0)) ",
@@ -829,9 +866,22 @@
       "type": "stat"
     },
     {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 17,
+      "panels": [],
+      "title": "Resource Usage (Time Series)",
+      "type": "row"
+    },
+    {
       "datasource": {
         "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -889,13 +939,16 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 10
       },
       "id": 10,
       "links": [],
       "options": {
         "legend": {
-          "calcs": ["last", "max"],
+          "calcs": [
+            "last",
+            "max"
+          ],
           "displayMode": "table",
           "placement": "right",
           "showLegend": true
@@ -910,7 +963,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -929,7 +982,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "sum (kube_pod_container_resource_requests{resource=\"cpu\", unit=\"core\",pod=~\"^$Deployment.*$\",node=~\"^$Node$\"})",
@@ -944,7 +997,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "sum (kube_node_status_allocatable{resource=\"cpu\", unit=\"core\",node=~\"^$Node$\"})",
@@ -963,7 +1016,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1022,13 +1075,16 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 15
+        "y": 17
       },
       "id": 11,
       "links": [],
       "options": {
         "legend": {
-          "calcs": ["max", "last"],
+          "calcs": [
+            "max",
+            "last"
+          ],
           "displayMode": "table",
           "placement": "right",
           "showLegend": true
@@ -1043,7 +1099,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "sum (container_memory_working_set_bytes{pod=~\"^$Deployment.*$\",kubernetes_io_hostname=~\"^$Node$\"})",
@@ -1060,7 +1116,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "sum (kube_pod_container_resource_requests{pod=~\"^$Deployment.*$\",node=~\"^$Node$\", resource=\"memory\", unit=\"byte\"})",
@@ -1074,7 +1130,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "sum (kube_node_status_allocatable{pod=~\"^$Deployment.*$\",node=~\"^$Node$\", resource=\"memory\", unit=\"byte\"})",
@@ -1093,7 +1149,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1152,13 +1208,17 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 22
+        "y": 24
       },
       "id": 13,
       "links": [],
       "options": {
         "legend": {
-          "calcs": ["max", "last", "mean"],
+          "calcs": [
+            "max",
+            "last",
+            "mean"
+          ],
           "displayMode": "table",
           "placement": "right",
           "showLegend": true
@@ -1173,7 +1233,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "sum (rate (container_network_receive_bytes_total{pod=~\"^$Deployment.*$\",kubernetes_io_hostname=~\"^$Node$\"}[1m]))",
@@ -1189,7 +1249,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "- sum( rate (container_network_transmit_bytes_total{pod=~\"^$Deployment.*$\",kubernetes_io_hostname=~\"^$Node$\"}[1m]))",
@@ -1205,12 +1265,94 @@
       ],
       "title": "Network I/O",
       "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 31
+      },
+      "id": 15,
+      "panels": [],
+      "title": "Row title",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 32
+      },
+      "id": 14,
+      "options": {
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "valueMode": "color"
+      },
+      "pluginVersion": "",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum (kube_pod_status_phase{ pod=~\"^$Deployment.*$\"}) by (phase) ",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Pod Containers by Phase",
+      "type": "bargauge"
     }
   ],
-  "refresh": false,
+  "refresh": "",
   "schemaVersion": 38,
   "style": "dark",
-  "tags": ["kubernetes", "deployment"],
+  "tags": [
+    "kubernetes",
+    "deployment"
+  ],
   "templating": {
     "list": [
       {
@@ -1218,7 +1360,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "P1809F7CD0C75ACF3"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "",
         "hide": 0,
@@ -1241,7 +1383,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "P1809F7CD0C75ACF3"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "",
         "hide": 0,
@@ -1261,6 +1403,10 @@
       },
       {
         "current": {},
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -1294,11 +1440,21 @@
       "2h",
       "1d"
     ],
-    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
   },
   "timezone": "browser",
   "title": "Aggregate Metrics Dashboard",
   "uid": "oWe9aYxmk",
-  "version": 19,
+  "version": 2,
   "weekStart": ""
 }

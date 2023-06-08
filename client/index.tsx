@@ -6,6 +6,10 @@ import './styles/app.scss';
 import './styles/normalize.css';
 import Pods from './pages/Pods';
 
+fetch('/status/init')
+  .then((r) => console.log(`Status check: response with code ${r.status}`))
+  .catch((e) => console.log(`Received error on status check: ${e}`));
+
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Failed to find root element');
 const root = createRoot(rootElement);
