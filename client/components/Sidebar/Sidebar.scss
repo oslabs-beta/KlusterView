@@ -57,10 +57,10 @@
 .dropdown-content {
   opacity: (0);
   margin: 0;
-  transition: opacity 0.6s;
   overflow-y: scroll;
   font-size: 1rem;
-  max-height: 30rem;
+  height: 0rem;
+  transition: opacity 1s;
 }
 
 .navlink:hover {
@@ -68,6 +68,7 @@
 
   .dropdown-content {
     opacity: 1;
+    height: 25rem;
   }
 }
 
