@@ -9,6 +9,7 @@ import Modal from './components/Modal/Modal';
 
 const App: FC = () => {
   const [url, setUrl] = useState<string>('');
+  const [podsUrl, setPodsUrl] = useState<string>('');
   const [klusterUrl, setKlusterUrl] = useState<string>('');
   const [podTitle, setPodTitle] = useState<string>('');
   const [podInfo, setPodInfo] = useState<{ name: string; ip: number }[]>([]);
@@ -52,12 +53,21 @@ const App: FC = () => {
     } catch (error) {
       console.log(error);
     }
-    // setUrl('https://picsum.photos/id/237/1537/693');
-    // setKlusterUrl('https://picsum.photos/id/237/1537/693');
+  };
+
+  const getPodsUrl = async () => {
+    try {
+      const res = await fetch('/grafana/pods');
+      const podUrl = await res.json();
+      setPodsUrl(podUrl);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     getUrl();
+    getPodsUrl();
   }, []);
 
   return (
@@ -67,13 +77,18 @@ const App: FC = () => {
         setPodTitle={setPodTitle}
         url={url}
         setUrl={setUrl}
+        podsUrl={podsUrl}
+        setPodsUrl={setPodsUrl}
         podInfo={podInfo}
         setPodInfo={setPodInfo}
         klusterUrl={klusterUrl}
       />
       <Routes>
         <Route index path='/' element={<Home url={url} />} />
-        <Route path='/pods' element={<Pods url={url} podTitle={podTitle} />} />
+        <Route
+          path='/pods/:pod'
+          element={<Pods url={podsUrl} podTitle={podTitle} />}
+        />
       </Routes>
 
       {/* <ModalContainer modalVisible={modalVisible} />
