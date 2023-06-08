@@ -14,6 +14,7 @@ interface SidebarProps {
   podsUrl: string;
   setPodsUrl: (podsUrl: string) => void;
   klusterUrl: string;
+  allPodsUrl: string;
   podInfo: PodInfo[];
   setPodInfo: (podInfo: PodInfo[]) => void;
 }
@@ -25,6 +26,7 @@ const Sidebar: FC<SidebarProps> = ({
   podsUrl,
   setPodsUrl,
   klusterUrl,
+  allPodsUrl,
   podInfo,
   setPodInfo,
 }) => {
@@ -47,7 +49,6 @@ const Sidebar: FC<SidebarProps> = ({
     setUrl(klusterUrl);
   };
 
-  // const handlePodLink = (e: SyntheticEvent<HTMLAnchorElement>) => {
   const handlePodLink = (e: MouseEventHandler<HTMLLIElement>) => {
     // Update page title with pod name
     console.log('base event:', e);
@@ -55,20 +56,26 @@ const Sidebar: FC<SidebarProps> = ({
     const podName = podClassName.slice(4);
     setPodTitle(podClassName);
 
-    //update url by inserting current pod number and ip
-    const urlIndexStart = podsUrl.indexOf('&var-Pod=') + 9;
-    const urlIndexEnd = podsUrl.indexOf('&var-phase=', urlIndexStart);
-    // Create URL Insert
-    const podInfoKeys = Object.keys(podInfo);
-    let names = podInfo.map((item) => item.name);
-    const podIndex = names.indexOf(podName);
-    const ipAddress = podInfo[podIndex].ip;
-    const urlInsert = `${podName}&var-Pod_ip=${ipAddress}`;
-    // Create newURL
-    const urlStart = podsUrl.slice(0, urlIndexStart);
-    const urlEnd = podsUrl.slice(urlIndexEnd);
-    const newUrl = urlStart.concat(urlInsert).concat(urlEnd);
-    setPodsUrl(newUrl);
+    //update url for all pods metrics if PODS was clicked
+    if (podName === 'All') {
+      setPodsUrl(allPodsUrl);
+      ////Else update url by inserting current pod number and ip
+    } else {
+      //Find indexes of url to add url insert
+      const urlIndexStart = podsUrl.indexOf('&var-Pod=') + 9;
+      const urlIndexEnd = podsUrl.indexOf('&var-phase=', urlIndexStart);
+      // Create URL Insert
+      const podInfoKeys = Object.keys(podInfo);
+      let names = podInfo.map((item) => item.name);
+      const podIndex = names.indexOf(podName);
+      const ipAddress = podInfo[podIndex].ip;
+      const urlInsert = `${podName}&var-Pod_ip=${ipAddress}`;
+      // Create newURL
+      const urlStart = podsUrl.slice(0, urlIndexStart);
+      const urlEnd = podsUrl.slice(urlIndexEnd);
+      const newUrl = urlStart.concat(urlInsert).concat(urlEnd);
+      setPodsUrl(newUrl);
+    }
   };
 
   //Create dropdown pod links by mapping through podLinks
@@ -108,8 +115,11 @@ const Sidebar: FC<SidebarProps> = ({
             ALERTS
           </Link>
         </li>
-        <li className='navlink'>
-          <p className='link link-p'>PODS</p>
+        <li className='navlink' onClick={handlePodLink}>
+          {/* <p className='link link-p'>PODS</p> */}
+          <Link className='link Pod-All' to='/pods/all'>
+            PODS
+          </Link>
           <ul className='sidebar-list dropdown-content'>{podLinks}</ul>
         </li>
       </ul>

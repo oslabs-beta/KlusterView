@@ -11,6 +11,7 @@ const App: FC = () => {
   const [url, setUrl] = useState<string>('');
   const [podsUrl, setPodsUrl] = useState<string>('');
   const [klusterUrl, setKlusterUrl] = useState<string>('');
+  const [allPodsUrl, setAllPodsUrl] = useState<string>('');
   const [podTitle, setPodTitle] = useState<string>('');
   const [podInfo, setPodInfo] = useState<{ name: string; ip: number }[]>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -58,6 +59,7 @@ const App: FC = () => {
       const res = await fetch('/grafana/pods');
       const podUrl = await res.json();
       setPodsUrl(podUrl);
+      setAllPodsUrl(podUrl);
     } catch (error) {
       console.log(error);
     }
@@ -80,6 +82,7 @@ const App: FC = () => {
         podInfo={podInfo}
         setPodInfo={setPodInfo}
         klusterUrl={klusterUrl}
+        allPodsUrl={allPodsUrl}
       />
       <Routes>
         <Route index path="/" element={<Home url={url} />} />
