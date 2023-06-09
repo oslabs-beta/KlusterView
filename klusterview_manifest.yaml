@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: klusterview
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: klusterview
+  template:
+    metadata:
+      name: klusterview
+      labels:
+        app: klusterview
+    spec:
+      containers:
+        - name: klusterview
+          image: kyleslugg/klusterview:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: '128Mi'
+              cpu: '500m'
+          ports:
+            - name: prod
+              containerPort: 3000
+            - name: dev
+              containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: klusterview
+spec:
+  selector:
+    app: klusterview
+
+  type: NodePort
+  ports:
+    - name: prod
+      port: 3000
+      targetPort: 3000
+      protocol: TCP
+      nodePort: 31001
+    - name: dev
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+      nodePort: 31002

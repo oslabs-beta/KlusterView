@@ -7,3 +7,4 @@ _temp_dev_files
 **/.dsStore
 deployment/_temp
 **/_deprecated
+.devcontainer
