@@ -22,9 +22,9 @@ spec:
               memory: '128Mi'
               cpu: '500m'
           ports:
-            - name: prod
+            - name: kv-prod
               containerPort: 3000
-            - name: dev
+            - name: kv-dev
               containerPort: 8080
 
 ---
@@ -40,11 +40,11 @@ spec:
   ports:
     - name: prod
       port: 3000
-      targetPort: 3000
-      protocol: TCP
+      targetPort: kv-prod
       nodePort: 31001
+      protocol: TCP
     - name: dev
       port: 8080
-      targetPort: 8080
-      protocol: TCP
+      targetPort: kv-dev
       nodePort: 31002
+      protocol: TCP

@@ -12,7 +12,8 @@ COPY ./ ./
 # Execute any commands on top of the current image as a new layer and commit the results.
 RUN npm install --dev
 
-EXPOSE 8080 3000
+EXPOSE 3000
+EXPOSE 8080
 
 # Configure the container to be run as an executable.
-ENTRYPOINT ["npm", "run", "dev"]
+ENTRYPOINT ["npm", "start"]

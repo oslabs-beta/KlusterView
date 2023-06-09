@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/server.ts",
   "scripts": {
-    "start": "NODE_ENV=production nodemon server/server.ts",
+    "start": "NODE_ENV=production webpack && node server/server.ts",
     "devserver": "NODE_ENV=development nodemon server/server.ts",
     "build": "NODE_ENV=production webpack",
     "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.ts\"",
