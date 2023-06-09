@@ -7,6 +7,14 @@ const statusRouter = express.Router();
 statusRouter.get(
   '',
   statusController.checkStatus,
+  (req: Request, res: Response) => {
+    return res.sendStatus(200);
+  }
+);
+
+statusRouter.get(
+  '/init',
+  statusController.checkStatus,
   initializationController.initializeGrafana,
   initializationController.login,
   (req: Request, res: Response) => {

@@ -11,11 +11,11 @@ const App: FC = () => {
   const [url, setUrl] = useState<string>('');
   const [podsUrl, setPodsUrl] = useState<string>('');
   const [klusterUrl, setKlusterUrl] = useState<string>('');
+  const [allPodsUrl, setAllPodsUrl] = useState<string>('');
   const [podTitle, setPodTitle] = useState<string>('');
   const [podInfo, setPodInfo] = useState<{ name: string; ip: number }[]>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
-  /*
   ///////   Check Status   ////////
   ///////////////////////////////////////////////
   const fetchStatus = async (endpoint, post) => {
@@ -25,8 +25,8 @@ const App: FC = () => {
         : await fetch(endpoint, {
             method: 'Post',
             headers: {
-              'Content-Type': 'application/json',
-            },
+              'Content-Type': 'application/json'
+            }
           });
       if (res.ok) {
         getUrl();
@@ -42,7 +42,6 @@ const App: FC = () => {
   useEffect(() => {
     fetchStatus('/status', false);
   }, []);
-  */
 
   const getUrl = async () => {
     try {
@@ -60,6 +59,7 @@ const App: FC = () => {
       const res = await fetch('/grafana/pods');
       const podUrl = await res.json();
       setPodsUrl(podUrl);
+      setAllPodsUrl(podUrl);
     } catch (error) {
       console.log(error);
     }
@@ -82,11 +82,12 @@ const App: FC = () => {
         podInfo={podInfo}
         setPodInfo={setPodInfo}
         klusterUrl={klusterUrl}
+        allPodsUrl={allPodsUrl}
       />
       <Routes>
-        <Route index path='/' element={<Home url={url} />} />
+        <Route index path="/" element={<Home url={url} />} />
         <Route
-          path='/pods/:pod'
+          path="/pods/:pod"
           element={<Pods url={podsUrl} podTitle={podTitle} />}
         />
       </Routes>

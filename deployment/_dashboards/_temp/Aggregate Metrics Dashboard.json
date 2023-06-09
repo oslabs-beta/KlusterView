@@ -32,282 +32,6 @@
         "x": 0,
         "y": 0
       },
-      "id": 15,
-      "panels": [],
-      "title": "Component Status Overview",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 0,
-        "y": 1
-      },
-      "id": 19,
-      "options": {
-        "displayMode": "gradient",
-        "minVizHeight": 10,
-        "minVizWidth": 0,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true,
-        "valueMode": "color"
-      },
-      "pluginVersion": "",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
-          "editorMode": "code",
-          "expr": "sum(kube_node_status_condition{status='true', node=~\"$Node.*$\"}) by (condition)",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Node Status Conditions",
-      "type": "bargauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 8,
-        "y": 1
-      },
-      "id": 14,
-      "options": {
-        "displayMode": "gradient",
-        "minVizHeight": 10,
-        "minVizWidth": 0,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true,
-        "valueMode": "color"
-      },
-      "pluginVersion": "",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
-          "editorMode": "code",
-          "expr": "sum (kube_pod_status_phase{ pod=~\"^$Deployment.*$\"}) by (phase) ",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Pod Containers by Phase",
-      "type": "bargauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P1809F7CD0C75ACF3"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "pattern": "[A-Z]\\s(.*)",
-                "result": {
-                  "index": 0,
-                  "text": "$1"
-                }
-              },
-              "type": "regex"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 16,
-        "y": 1
-      },
-      "id": 18,
-      "options": {
-        "displayMode": "gradient",
-        "minVizHeight": 10,
-        "minVizWidth": 0,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true,
-        "valueMode": "color"
-      },
-      "pluginVersion": "",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
-          "editorMode": "code",
-          "expr": "sum(label_replace(rate(kube_pod_container_status_restarts_total{container=~\"$Deployment.*$\"}[30m]), \"dep\",\"$1\",\"container\", \"(.+)\")) by (dep)",
-          "hide": true,
-          "legendFormat": "",
-          "range": true,
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P1809F7CD0C75ACF3"
-          },
-          "editorMode": "code",
-          "expr": "sum(label_replace(kube_deployment_spec_replicas{deployment=~\"$Deployment.*$\"}, \"dep\", \"$1\", \"deployment\", \"(.+)\")) by (dep)",
-          "hide": true,
-          "legendFormat": "",
-          "range": true,
-          "refId": "B"
-        },
-        {
-          "datasource": {
-            "name": "Expression",
-            "type": "__expr__",
-            "uid": "__expr__"
-          },
-          "expression": "A",
-          "hide": true,
-          "reducer": "last",
-          "refId": "C",
-          "type": "reduce"
-        },
-        {
-          "datasource": {
-            "name": "Expression",
-            "type": "__expr__",
-            "uid": "__expr__"
-          },
-          "expression": "B",
-          "hide": true,
-          "reducer": "last",
-          "refId": "D",
-          "type": "reduce"
-        },
-        {
-          "datasource": {
-            "name": "Expression",
-            "type": "__expr__",
-            "uid": "__expr__"
-          },
-          "expression": "$A/$B",
-          "hide": false,
-          "refId": "E",
-          "type": "math"
-        }
-      ],
-      "title": "Restarts per Specified Replica (Last 30 mins)",
-      "transformations": [
-        {
-          "id": "groupBy",
-          "options": {}
-        }
-      ],
-      "type": "bargauge"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 9
-      },
       "id": 16,
       "panels": [],
       "title": "Resource Usage (Current)",
@@ -361,7 +85,7 @@
         "h": 5,
         "w": 8,
         "x": 0,
-        "y": 10
+        "y": 1
       },
       "id": 1,
       "links": [],
@@ -462,7 +186,7 @@
         "h": 5,
         "w": 8,
         "x": 8,
-        "y": 10
+        "y": 1
       },
       "id": 2,
       "links": [],
@@ -578,7 +302,7 @@
         "h": 5,
         "w": 8,
         "x": 16,
-        "y": 10
+        "y": 1
       },
       "id": 3,
       "links": [],
@@ -656,7 +380,7 @@
         "h": 3,
         "w": 4,
         "x": 0,
-        "y": 15
+        "y": 6
       },
       "id": 4,
       "links": [],
@@ -736,7 +460,7 @@
         "h": 3,
         "w": 4,
         "x": 4,
-        "y": 15
+        "y": 6
       },
       "id": 5,
       "links": [],
@@ -816,7 +540,7 @@
         "h": 3,
         "w": 4,
         "x": 8,
-        "y": 15
+        "y": 6
       },
       "id": 6,
       "links": [],
@@ -896,7 +620,7 @@
         "h": 3,
         "w": 4,
         "x": 12,
-        "y": 15
+        "y": 6
       },
       "id": 7,
       "links": [],
@@ -973,7 +697,7 @@
         "h": 3,
         "w": 4,
         "x": 16,
-        "y": 15
+        "y": 6
       },
       "id": 8,
       "links": [],
@@ -1053,7 +777,7 @@
         "h": 3,
         "w": 4,
         "x": 20,
-        "y": 15
+        "y": 6
       },
       "id": 9,
       "links": [],
@@ -1098,7 +822,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 9
       },
       "id": 17,
       "panels": [],
@@ -1166,7 +890,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 10
       },
       "id": 10,
       "links": [],
@@ -1302,7 +1026,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 17
       },
       "id": 11,
       "links": [],
@@ -1435,7 +1159,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 33
+        "y": 24
       },
       "id": 13,
       "links": [],
@@ -1492,6 +1216,85 @@
       ],
       "title": "Network I/O",
       "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 31
+      },
+      "id": 15,
+      "panels": [],
+      "title": "Row title",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P1809F7CD0C75ACF3"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 32
+      },
+      "id": 14,
+      "options": {
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "valueMode": "color"
+      },
+      "pluginVersion": "",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P1809F7CD0C75ACF3"
+          },
+          "editorMode": "code",
+          "expr": "sum (kube_pod_status_phase{ pod=~\"^$Deployment.*$\"}) by (phase) ",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Pod Containers by Phase",
+      "type": "bargauge"
     }
   ],
   "refresh": "",
@@ -1556,11 +1359,36 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "current": {
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Namespace",
+        "multi": false,
+        "name": "Namespace",
+        "options": [],
+        "query": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -1591,6 +1419,6 @@
   "timezone": "browser",
   "title": "Aggregate Metrics Dashboard",
   "uid": "oWe9aYxmk",
-  "version": 8,
+  "version": 2,
   "weekStart": ""
 }
