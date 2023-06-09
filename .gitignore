@@ -8,3 +8,5 @@ _temp_dev_files
 deployment/_temp
 **/_deprecated
 .devcontainer
+*.code-workspace
+_util_scripts

@@ -35,9 +35,9 @@ export const getNodeIPs = (): string[] => {
   return IPs;
 };
 
-const IPList = getNodeIPs();
-const GRAF_IP = IPList[0];
-const GRAF_NODE_PORT = '32000';
+//const IPList = getNodeIPs();
+const GRAF_IP = 'grafana.monitoring-kv.svc.cluster.local'//IPList[0];
+const GRAF_NODE_PORT = '3000';
 
 //Define module-level error generator
 const createError = (

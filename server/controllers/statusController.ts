@@ -32,10 +32,12 @@ statusController.checkStatus = (
   res: Response,
   next: NextFunction
 ): void => {
-  clusterRunning(res, next);
+  //Knocking this out since we're running on a cluster
+  //clusterRunning(res, next);
   console.log('Cleared clusterRunning check');
 
-  prometheusAndGrafanaRunning(res, next);
+  //Knocking this out until I figure out how to implement in the cluster env
+  //prometheusAndGrafanaRunning(res, next);
   console.log('Cleared prometheusAndGrafanaRunning check');
 
   return next();

@@ -17,7 +17,7 @@ module.exports = {
   },
   mode: process.env.NODE_ENV,
   devServer: {
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 8080,
     // enable HMR on the devServer
     hot: true,
@@ -40,7 +40,7 @@ module.exports = {
      */
     proxy: {
       '/**': {
-        target: 'http://localhost:3000/',
+        target: 'http://0.0.0.0:3000/',
         secure: false
       }
     }

@@ -16,4 +16,4 @@ EXPOSE 3000
 EXPOSE 8080
 
 # Configure the container to be run as an executable.
-ENTRYPOINT ["npm", "start"]
+ENTRYPOINT ["npm", "run", "dev"]

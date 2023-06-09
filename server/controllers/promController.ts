@@ -9,9 +9,9 @@ interface PodMetric {
   };
 }
 
-const IPList = getNodeIPs();
-const PROM_IP = IPList[0];
-const PROM_NODE_PORT = '30000';
+//const IPList = getNodeIPs();
+const PROM_IP = 'prometheus-service.monitoring-kv.svc.cluster.local'//IPList[0];
+const PROM_NODE_PORT = '8080';
 
 const getPodNames: MiddlewareFn = async (req, res, next) => {
   try {

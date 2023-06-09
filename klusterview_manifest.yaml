@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: klusterview
+  namespace: monitoring-kv
 spec:
   replicas: 2
   selector:
@@ -16,15 +17,14 @@ spec:
       containers:
         - name: klusterview
           image: kyleslugg/klusterview:latest
-          imagePullPolicy: Always
           resources:
             limits:
-              memory: '128Mi'
+              memory: '500Mi'
               cpu: '500m'
           ports:
-            - name: kv-prod
+            - name: prod
               containerPort: 3000
-            - name: kv-dev
+            - name: dev
               containerPort: 8080
 
 ---
@@ -32,19 +32,19 @@ apiVersion: v1
 kind: Service
 metadata:
   name: klusterview
+  namespace: monitoring-kv
 spec:
   selector:
     app: klusterview
-
   type: NodePort
   ports:
     - name: prod
       port: 3000
-      targetPort: kv-prod
+      targetPort: 3000
       nodePort: 31001
       protocol: TCP
     - name: dev
       port: 8080
-      targetPort: kv-dev
+      targetPort: 8080
       nodePort: 31002
       protocol: TCP
