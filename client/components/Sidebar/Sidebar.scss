@@ -10,6 +10,7 @@
   left: 0;
   margin-left: 2rem;
   overflow-y: hidden;
+  z-index: 2;
 }
 
 .sidebar-list {
@@ -65,7 +66,6 @@
 
 .navlink:hover {
   border: 1px solid cyan;
-
   .dropdown-content {
     opacity: 1;
     height: 25rem;
