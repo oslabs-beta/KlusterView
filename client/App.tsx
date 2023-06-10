@@ -16,20 +16,19 @@ const App: FC = () => {
   const [podInfo, setPodInfo] = useState<{ name: string; ip: number }[]>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
-  ///////   Check Status   ////////
-  ///////////////////////////////////////////////
-  const fetchStatus = async (endpoint, post) => {
+  // Check Status
+  const fetchStatus = async (endpoint: string, post: boolean) => {
     try {
       const res = !post
         ? await fetch(endpoint)
         : await fetch(endpoint, {
             method: 'Post',
             headers: {
-              'Content-Type': 'application/json'
-            }
+              'Content-Type': 'application/json',
+            },
           });
       if (res.ok) {
-        getUrl();
+        getUrl('/grafana/dashboard', setUrl, setKlusterUrl);
         setModalVisible(false);
       } else {
         setModalVisible(true);
@@ -43,31 +42,25 @@ const App: FC = () => {
     fetchStatus('/status', false);
   }, []);
 
-  const getUrl = async () => {
+  // Fetch Metrics dashboard URLs
+  const getUrl = async (
+    endpoint: string,
+    setDashboard: (url: string) => void,
+    setOriginalDashboard: (url: string) => void
+  ) => {
     try {
-      const res = await fetch('/grafana/dashboard');
+      const res = await fetch(endpoint);
       const url = await res.json();
-      setUrl(url);
-      setKlusterUrl(url);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getPodsUrl = async () => {
-    try {
-      const res = await fetch('/grafana/pods');
-      const podUrl = await res.json();
-      setPodsUrl(podUrl);
-      setAllPodsUrl(podUrl);
+      setDashboard(url);
+      setOriginalDashboard(url);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getUrl();
-    getPodsUrl();
+    getUrl('/grafana/dashboard', setUrl, setKlusterUrl);
+    getUrl('/grafana/pods', setPodsUrl, setAllPodsUrl);
   }, []);
 
   return (
@@ -85,13 +78,12 @@ const App: FC = () => {
         allPodsUrl={allPodsUrl}
       />
       <Routes>
-        <Route index path="/" element={<Home url={url} />} />
+        <Route index path='/' element={<Home url={url} />} />
         <Route
-          path="/pods/:pod"
+          path='/pods/:pod'
           element={<Pods url={podsUrl} podTitle={podTitle} />}
         />
       </Routes>
-
       {/* <ModalContainer modalVisible={modalVisible} />
       <Modal modalVisible={modalVisible} fetchStatus={fetchStatus} /> */}
     </>
