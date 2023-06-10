@@ -41,7 +41,10 @@ module.exports = {
     proxy: {
       '/**': {
         target: 'http://0.0.0.0:3000/',
-        secure: false
+        secure: false,
+        headers: {
+          Connection: 'keep-alive'
+      }
       }
     }
   },

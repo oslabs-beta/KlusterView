@@ -39,7 +39,7 @@ const App: FC = () => {
   };
 
   useEffect(() => {
-    fetchStatus('/status/init', false);
+    fetchStatus('/status', false);
   }, []);
 
   // Fetch Metrics dashboard URLs

@@ -57,10 +57,10 @@ app.use('/grafana', grafanaRouter);
 app.use('/status', statusRouter);
 
 //Forward calls to Grafana to internal path
-app.use('/grafanasvc', createProxyMiddleware({target: `http://${GRAF_HOST}:${GRAF_PORT}`, changeOrigin: false, auth:'admin:admin' }))
+app.use('/grafanasvc', createProxyMiddleware({target: `http://${GRAF_HOST}:${GRAF_PORT}`, changeOrigin: false, auth:'admin:admin', ws: true }))
 
 //Forward calls to Prom to internal path
-app.use('/promsvc', createProxyMiddleware({target: `http://${PROM_HOST}:${PROM_PORT}`, changeOrigin: false }))
+app.use('/promsvc', createProxyMiddleware({target: `http://${PROM_HOST}:${PROM_PORT}`, changeOrigin: false, ws: true }))
 
 
 //404 Handler
