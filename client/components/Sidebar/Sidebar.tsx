@@ -49,17 +49,15 @@ const Sidebar: FC<SidebarProps> = ({
     setUrl(klusterUrl);
   };
 
-  const handlePodLink = (e: MouseEventHandler<HTMLLIElement>) => {
+  const handlePodLink = (e: MouseEventHandler<HTMLAnchorElement>) => {
     // Update page title with pod name
-    console.log('base event:', e);
-    const podClassName = e.target.classList[1];
-    const podName = podClassName.slice(4);
+    const podClassName = e.currentTarget.classList[1];
     setPodTitle(podClassName);
+    const podName = podClassName.slice(4);
 
-    //update url for all pods metrics if PODS was clicked
+    // //update url for all pods metrics if PODS was clicked
     if (podName === 'All') {
       setPodsUrl(allPodsUrl);
-      ////Else update url by inserting current pod number and ip
     } else {
       //Find indexes of url to add url insert
       const urlIndexStart = podsUrl.indexOf('&var-Pod=') + 9;
@@ -81,15 +79,11 @@ const Sidebar: FC<SidebarProps> = ({
   //Create dropdown pod links by mapping through podLinks
   const podLinks: JSX.Element[] = podInfo.map((pod: PodInfo) => {
     return (
-      <li
-        key={pod.name}
-        className='navlink navlink-dropdown'
-        onClick={handlePodLink}
-      >
+      <li key={pod.name} className='navlink navlink-dropdown'>
         <Link
-          key={pod.name}
           className={`link Pod-${pod.name}`}
           to={`/pods/${pod.name}`}
+          onClick={handlePodLink}
         >
           {pod.name}
         </Link>
@@ -115,9 +109,9 @@ const Sidebar: FC<SidebarProps> = ({
             ALERTS
           </Link>
         </li>
-        <li className='navlink' onClick={handlePodLink}>
+        <li className='navlink'>
           {/* <p className='link link-p'>PODS</p> */}
-          <Link className='link Pod-All' to='/pods/all'>
+          <Link className='link Pod-All' to='/pods/all' onClick={handlePodLink}>
             PODS
           </Link>
           <ul className='sidebar-list dropdown-content'>{podLinks}</ul>
