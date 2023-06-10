@@ -17,6 +17,7 @@ interface SidebarProps {
   allPodsUrl: string;
   podInfo: PodInfo[];
   setPodInfo: (podInfo: PodInfo[]) => void;
+  nodeMapInfo: { [n: string]: string[] };
 }
 
 const Sidebar: FC<SidebarProps> = ({
@@ -29,6 +30,7 @@ const Sidebar: FC<SidebarProps> = ({
   allPodsUrl,
   podInfo,
   setPodInfo,
+  nodeMapInfo,
 }) => {
   const getPodInfo = async () => {
     try {
@@ -90,7 +92,16 @@ const Sidebar: FC<SidebarProps> = ({
       </li>
     );
   });
-
+  // : JSX.Element[]
+  const nodeLinks = Object.keys(nodeMapInfo).map((node) => {
+    return (
+      <li className='navlink navlink-dropdown'>
+        <Link className={`link`} to={`/nodegraph/${node}`}>
+          {node}
+        </Link>
+      </li>
+    );
+  });
   return (
     <nav className='sidebar'>
       <ul className='sidebar-list'>
@@ -99,11 +110,7 @@ const Sidebar: FC<SidebarProps> = ({
             KLUSTER
           </Link>
         </li>
-        <li className='navlink'>
-          <Link className='link' to='/'>
-            NODE MAP
-          </Link>
-        </li>
+
         <li className='navlink'>
           <Link className='link' to='/'>
             ALERTS
@@ -115,6 +122,12 @@ const Sidebar: FC<SidebarProps> = ({
             PODS
           </Link>
           <ul className='sidebar-list dropdown-content'>{podLinks}</ul>
+        </li>
+        <li className='navlink'>
+          <Link className='link' to='/nodegraph/minikube'>
+            NODE MAP
+          </Link>
+          <ul className='sidebar-list dropdown-content'>{nodeLinks}</ul>
         </li>
       </ul>
     </nav>
