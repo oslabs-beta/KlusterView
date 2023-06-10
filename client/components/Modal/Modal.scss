@@ -55,10 +55,10 @@
 
   button {
     margin: 0 1rem;
-  }
 
-  button:hover {
-    transform: scale(1.03);
+    &:hover {
+      transform: scale(1.03);
+    }
   }
 }
 
