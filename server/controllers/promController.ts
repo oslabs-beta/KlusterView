@@ -1,17 +1,11 @@
-import { MiddlewareFn } from '../types';
+import { MiddlewareFn, PodMetric, stausObject, podObject } from '../types';
 import axios from 'axios';
 import { getNodeIPs } from './initializationController';
-
-interface PodMetric {
-  metric: {
-    pod: string;
-    pod_ip: string;
-  };
-}
 
 const IPList = getNodeIPs();
 const PROM_IP = IPList[0];
 const PROM_NODE_PORT = '30000';
+console.log('prom ip', PROM_IP);
 
 const getPodNames: MiddlewareFn = async (req, res, next) => {
   try {
@@ -52,4 +46,51 @@ const getpodIP: MiddlewareFn = async (req, res, next) => {
     next(err);
   }
 };
-export default { getPodNames, getpodIP };
+
+const getPodStatuses: MiddlewareFn = async (req, res, next) => {
+  try {
+    const response = await axios.get(
+      `http://${PROM_IP}:${PROM_NODE_PORT}/api/v1/query?query=kube_pod_status_phase`
+    );
+    const podStatusInfo = response.data.data.result;
+
+    const podStatusNames = {};
+
+    podStatusInfo.forEach((el: stausObject) => {
+      if (el.value[1] === '1') {
+        if (!podStatusNames[el.metric.pod]) {
+          podStatusNames[el.metric.pod] = el.metric.phase;
+        }
+      }
+    });
+
+    res.locals.podStatusNames = podStatusNames;
+    return next();
+  } catch (error) {}
+};
+
+const getPodNodes: MiddlewareFn = async (req, res, next) => {
+  try {
+    const response = await axios.get(
+      `http://${PROM_IP}:${PROM_NODE_PORT}/api/v1/query?query=kube_pod_info`
+    );
+    const pods = response.data.data.result;
+    const podNodes = pods.reduce(
+      (acc: { [key: string]: string[] }, curr: podObject) => {
+        if (acc[curr.metric.node]) {
+          acc[curr.metric.node].push(curr.metric.pod);
+        } else {
+          acc[curr.metric.node] = [curr.metric.pod];
+        }
+        return acc;
+      },
+      {}
+    );
+
+    res.locals.podNodes = podNodes;
+    return next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+export default { getPodNames, getpodIP, getPodStatuses, getPodNodes };
