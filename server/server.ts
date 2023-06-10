@@ -1,4 +1,5 @@
 import { Errback, NextFunction, Request, Response, Router } from 'express';
+import { createProxyMiddleware, Filter, Options, RequestHandler } from 'http-proxy-middleware';
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
@@ -15,6 +16,16 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
 dotenv.config();
+
+//DEFINE KEY CONSTANTS HERE for use throughout app
+
+const PORT = 3000;
+
+const GRAF_HOST = 'grafana.monitoring-kv.svc.cluster.local'
+const GRAF_PORT = 3000;
+
+const PROM_HOST = 'prometheus-service.monitoring-kv.svc.cluster.local'
+const PROM_PORT = 8080;
 
 //environment variables
 // const { MONGO_URI, SERVER_PORT } = process.env;
@@ -44,6 +55,13 @@ app.use('/grafana', grafanaRouter);
 
 //Status router checks Kubernetes status and takes action as appropriate
 app.use('/status', statusRouter);
+
+//Forward calls to Grafana to internal path
+app.use('/grafanasvc', createProxyMiddleware({target: `http://${GRAF_HOST}:${GRAF_PORT}`, changeOrigin: false, auth:'admin:admin' }))
+
+//Forward calls to Prom to internal path
+app.use('/promsvc', createProxyMiddleware({target: `http://${PROM_HOST}:${PROM_PORT}`, changeOrigin: false }))
+
 
 //404 Handler
 app.use('*', (req: Request, res: Response) => {

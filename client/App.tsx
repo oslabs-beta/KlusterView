@@ -40,7 +40,7 @@ const App: FC = () => {
   };
 
   useEffect(() => {
-    fetchStatus('/status', false);
+    fetchStatus('/status/init', false);
   }, []);
 
   const getUrl = async () => {

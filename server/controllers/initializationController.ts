@@ -11,6 +11,8 @@ import * as fs from 'fs';
 import { encode } from 'base-64';
 import * as child from 'child_process';
 
+//Establish place on res.locals for bug testing
+
 //Get NodeIPs for grafana
 
 export const getNodeIPs = (): string[] => {
@@ -74,6 +76,8 @@ initializationController.login = async (
       })
     });
 
+    res.locals.login = await response.json();
+
     if (!response.ok) {
       const resp = await response.json();
       console.log(resp);
@@ -135,6 +139,8 @@ initializationController.initializeGrafana = async (
         }
       }
     );
+    
+    res.locals.maindash = await mainResp.json();
 
     if (!mainResp.ok) {
       if (mainResp.status !== 412) {
@@ -171,7 +177,7 @@ initializationController.initializeGrafana = async (
         }
       }
     );
-
+    res.locals.poddash = await podResp.json();
     if (!podResp.ok) {
       if (podResp.status !== 412) {
         const resp = await podResp.json();

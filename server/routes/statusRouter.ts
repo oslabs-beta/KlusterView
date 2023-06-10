@@ -18,7 +18,7 @@ statusRouter.get(
   initializationController.initializeGrafana,
   initializationController.login,
   (req: Request, res: Response) => {
-    return res.sendStatus(200);
+    return res.status(200).json([res.locals.login, res.locals.maindash, res.locals.poddash]);
   }
 );
 

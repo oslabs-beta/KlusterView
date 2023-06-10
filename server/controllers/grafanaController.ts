@@ -43,7 +43,7 @@ const getPods: MiddlewareFn = async (req, res, next) => {
   const { from, to } = timeStamp();
   try {
     const { dashboardUid, dashboardUri } = await getDashboard(1);
-    const src = `http://${GRAF_IP}:${GRAF_NODE_PORT}/d/${dashboardUid}/${dashboardUri}/?orgId=1&refresh=30s&var-Node=All&var-Pod=All&var-Pod_ip=192.168.49.2&from=${from}&to=${to}`;
+    const src = `/grafanasvc/d/${dashboardUid}/${dashboardUri}/?orgId=1&refresh=30s&var-Node=All&var-Pod=All&var-Pod_ip=192.168.49.2&from=${from}&to=${to}`;
     res.locals.src = src;
     return next();
   } catch (error) {
@@ -59,7 +59,7 @@ const getCluster: MiddlewareFn = async (req, res, next) => {
   const { from, to } = timeStamp();
   try {
     const { dashboardUid, dashboardUri } = await getDashboard(0);
-    const src = `http://${GRAF_IP}:${GRAF_NODE_PORT}/d/${dashboardUid}/${dashboardUri}/?orgId=1&refresh=30sfrom=${from}&to=${to}`;
+    const src = `/grafanasvc/d/${dashboardUid}/${dashboardUri}/?orgId=1&refresh=30sfrom=${from}&to=${to}`;
     res.locals.src = src;
     return next();
   } catch (error) {
