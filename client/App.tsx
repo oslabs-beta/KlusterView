@@ -31,7 +31,7 @@ const App: FC = () => {
             },
           });
       if (res.ok) {
-        getUrl();
+        getUrl('/grafana/dashboard', setUrl, setKlusterUrl);
         setModalVisible(false);
       } else {
         setModalVisible(true);
@@ -66,31 +66,25 @@ const App: FC = () => {
     fetchStatus('/status', false);
   }, []);
 
-  const getUrl = async () => {
+  // Fetch Metrics dashboard URLs
+  const getUrl = async (
+    endpoint: string,
+    setDashboard: (url: string) => void,
+    setOriginalDashboard: (url: string) => void
+  ) => {
     try {
-      const res = await fetch('/grafana/dashboard');
+      const res = await fetch(endpoint);
       const url = await res.json();
-      setUrl(url);
-      setKlusterUrl(url);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getPodsUrl = async () => {
-    try {
-      const res = await fetch('/grafana/pods');
-      const podUrl = await res.json();
-      setPodsUrl(podUrl);
-      setAllPodsUrl(podUrl);
+      setDashboard(url);
+      setOriginalDashboard(url);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getUrl();
-    getPodsUrl();
+    getUrl('/grafana/dashboard', setUrl, setKlusterUrl);
+    getUrl('/grafana/pods', setPodsUrl, setAllPodsUrl);
     getPodNodes();
     getPodStatus();
   }, []);
@@ -123,7 +117,6 @@ const App: FC = () => {
           }
         />
       </Routes>
-
       {/* <ModalContainer modalVisible={modalVisible} />
       <Modal modalVisible={modalVisible} fetchStatus={fetchStatus} /> */}
     </>
