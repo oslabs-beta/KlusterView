@@ -17,6 +17,7 @@ interface SidebarProps {
   allPodsUrl: string;
   podInfo: PodInfo[];
   setPodInfo: (podInfo: PodInfo[]) => void;
+  nodeMapInfo: { [n: string]: string[] };
 }
 
 const Sidebar: FC<SidebarProps> = ({
@@ -29,6 +30,7 @@ const Sidebar: FC<SidebarProps> = ({
   allPodsUrl,
   podInfo,
   setPodInfo,
+  nodeMapInfo,
 }) => {
   const getPodInfo = async () => {
     try {
@@ -49,19 +51,15 @@ const Sidebar: FC<SidebarProps> = ({
     setUrl(klusterUrl);
   };
 
-  const handlePodLink = (e: MouseEventHandler<HTMLLIElement>) => {
+  const handlePodLink = (e: MouseEventHandler<HTMLAnchorElement>) => {
     // Update page title with pod name
-    const podClassName = e.target.classList[1];
+    const podClassName = e.currentTarget.classList[1];
+    setPodTitle(podClassName);
     const podName = podClassName.slice(4);
-    if (podName !== 'down-content' && podName !== 'ink-dropdown')
-      setPodTitle(podClassName);
 
-    //update url for all pods metrics if PODS was clicked
+    // //update url for all pods metrics if PODS was clicked
     if (podName === 'All') {
       setPodsUrl(allPodsUrl);
-      ////Else update url by inserting current pod number and ip
-    } else if (podName === 'down-content' || podName === 'ink-dropdown') {
-      return;
     } else {
       //Find indexes of url to add url insert
       const urlIndexStart = podsUrl.indexOf('&var-Pod=') + 9;
@@ -83,18 +81,27 @@ const Sidebar: FC<SidebarProps> = ({
   //Create dropdown pod links by mapping through podLinks
   const podLinks: JSX.Element[] = podInfo.map((pod: PodInfo) => {
     return (
-      <li
-        key={pod.name}
-        className='navlink navlink-dropdown'
-        onClick={handlePodLink}
-      >
-        <Link className={`link Pod-${pod.name}`} to={`/pods/${pod.name}`}>
+      <li key={pod.name} className='navlink navlink-dropdown'>
+        <Link
+          className={`link Pod-${pod.name}`}
+          to={`/pods/${pod.name}`}
+          onClick={handlePodLink}
+        >
           {pod.name}
         </Link>
       </li>
     );
   });
-
+  // : JSX.Element[]
+  const nodeLinks = Object.keys(nodeMapInfo).map((node) => {
+    return (
+      <li className='navlink navlink-dropdown'>
+        <Link className={`link`} to={`/nodegraph/${node}`}>
+          {node}
+        </Link>
+      </li>
+    );
+  });
   return (
     <nav className='sidebar'>
       <ul className='sidebar-list'>
@@ -103,22 +110,24 @@ const Sidebar: FC<SidebarProps> = ({
             KLUSTER
           </Link>
         </li>
-        <li className='navlink'>
-          <Link className='link' to='/'>
-            NODE MAP
-          </Link>
-        </li>
+
         <li className='navlink'>
           <Link className='link' to='/'>
             ALERTS
           </Link>
         </li>
-        <li className='navlink' onClick={handlePodLink}>
+        <li className='navlink'>
           {/* <p className='link link-p'>PODS</p> */}
-          <Link className='link Pod-All' to='/pods/all'>
+          <Link className='link Pod-All' to='/pods/all' onClick={handlePodLink}>
             PODS
           </Link>
           <ul className='sidebar-list dropdown-content'>{podLinks}</ul>
+        </li>
+        <li className='navlink'>
+          <Link className='link' to='/nodegraph/minikube'>
+            NODE MAP
+          </Link>
+          <ul className='sidebar-list dropdown-content'>{nodeLinks}</ul>
         </li>
       </ul>
     </nav>
