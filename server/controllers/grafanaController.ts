@@ -5,7 +5,7 @@ import encode from 'base-64';
 import { getNodeIPs } from './initializationController';
 
 //const IPList = getNodeIPs();
-const GRAF_IP = 'grafana.monitoring-kv.svc.cluster.local'//IPList[0];
+const GRAF_IP = 'grafana'//IPList[0];
 const GRAF_NODE_PORT = '3000';
 
 //CREATING UNIX TIMESTAMP VALUES FOR "FROM" & "TO"

@@ -64,6 +64,11 @@ module.exports = {
           }
         }
       },
+      // {
+      //   test: /\.(ts|tsx)$/,
+      //   exclude: /node_modules/,
+      //   use: ['ts-loader'],
+      // },
       {
         test: /.(css|scss)$/,
         //exclude: /node_modules/,

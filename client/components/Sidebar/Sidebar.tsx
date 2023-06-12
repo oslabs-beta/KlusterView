@@ -49,7 +49,7 @@ const Sidebar: FC<SidebarProps> = ({
     setUrl(klusterUrl);
   };
 
-  const handlePodLink = (e: MouseEventHandler<HTMLAnchorElement>) => {
+  const handlePodLink = (e: MouseEventHandler<MouseEvent>) => {
     // Update page title with pod name
     const podClassName = e.currentTarget.classList[1];
     setPodTitle(podClassName);
@@ -111,7 +111,7 @@ const Sidebar: FC<SidebarProps> = ({
         </li>
         <li className='navlink'>
           {/* <p className='link link-p'>PODS</p> */}
-          <Link className='link Pod-All' to='/pods/all' onClick={handlePodLink}>
+          <Link className='link Pod-All' to='/pods/all' onClick={(e) => {handlePodLink(e)}}>
             PODS
           </Link>
           <ul className='sidebar-list dropdown-content'>{podLinks}</ul>

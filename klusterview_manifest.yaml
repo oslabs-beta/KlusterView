@@ -4,7 +4,7 @@ metadata:
   name: klusterview
   namespace: monitoring-kv
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: klusterview

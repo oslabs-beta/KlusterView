@@ -8,8 +8,9 @@ import {
 import { MethodError } from '../types';
 import * as path from 'path';
 import * as fs from 'fs';
-import { encode } from 'base-64';
+import b64 from 'base-64';
 import * as child from 'child_process';
+const encode = b64.encode;
 
 //Establish place on res.locals for bug testing
 

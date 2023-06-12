@@ -54,12 +54,11 @@ spec:
               value: '%(protocol)s://%(domain)s:%(http_port)s/grafanasvc'
             - name: GF_SERVER_SERVE_FROM_SUB_PATH
               value: 'true'
-            - name: GF_DATAPROXY_KEEP_ALIVE_SECONDS
-              value: '5'
       volumes:
         - name: grafana-storage
-          persistentVolumeClaim:
-            claimName: grafana-pvc
+          emptyDir: {}
+          #persistentVolumeClaim:
+          #  claimName: grafana-pvc
         - name: grafana-datasources
           configMap:
             defaultMode: 420

@@ -10,6 +10,7 @@ import promRouter from './routes/promRouter';
 import grafanaRouter from './routes/grafanaRouter';
 import statusRouter from './routes/statusRouter';
 import { MethodError } from './types';
+import { IncomingMessage } from 'http';
 
 const app = express();
 app.use(express.json());
@@ -21,7 +22,7 @@ dotenv.config();
 
 const PORT = 3000;
 
-const GRAF_HOST = 'grafana.monitoring-kv.svc.cluster.local'
+const GRAF_HOST = 'grafana'
 const GRAF_PORT = 3000;
 
 const PROM_HOST = 'prometheus-service.monitoring-kv.svc.cluster.local'
@@ -57,7 +58,12 @@ app.use('/grafana', grafanaRouter);
 app.use('/status', statusRouter);
 
 //Forward calls to Grafana to internal path
-app.use('/grafanasvc', createProxyMiddleware({target: `http://${GRAF_HOST}:${GRAF_PORT}`, changeOrigin: false, auth:'admin:admin', ws: true }))
+app.use('/grafanasvc', createProxyMiddleware({target: `http://${GRAF_HOST}:${GRAF_PORT}`, changeOrigin: false, auth:'admin:admin', ws: true, onError: (err: Error, req: Request, res: Response) => {
+  console.log(err);
+  console.log(res);
+  res.status(500);
+  res.send(err);
+}}))
 
 //Forward calls to Prom to internal path
 app.use('/promsvc', createProxyMiddleware({target: `http://${PROM_HOST}:${PROM_PORT}`, changeOrigin: false, ws: true }))
