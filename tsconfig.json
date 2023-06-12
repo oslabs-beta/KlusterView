@@ -1,14 +1,15 @@
-{"include": ["server/**/*", "client/**/*"],
+{
+  "include": ["server/**/*", "client/**/*"],
   "compilerOptions": {
     "types": ["node"],
     "esModuleInterop": true,
     "jsx": "react",
     "target": "ES6",
-    "module": "esnext",
+    "module": "CommonJS",
     "moduleResolution": "node",
-    
+    "sourceMap": true
   },
   "ts-node": {
     "esm": true
-},
+  }
 }

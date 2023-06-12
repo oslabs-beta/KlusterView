@@ -54,6 +54,14 @@ spec:
               value: '%(protocol)s://%(domain)s:%(http_port)s/grafanasvc'
             - name: GF_SERVER_SERVE_FROM_SUB_PATH
               value: 'true'
+            - name: GF_DATAPROXY_KEEP_ALIVE_SECONDS
+              value: '240'
+            - name: GF_DATAPROXY_TIMEOUT
+              value: '240'
+            - name: GF_DATAPROXY_IDLE_CONN_TIMEOUT_SECONDS
+              value: '300'
+            - name: 'GF_LIVE_ALLOWED_ORIGINS'
+              value: '*'
       volumes:
         - name: grafana-storage
           emptyDir: {}

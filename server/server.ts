@@ -1,5 +1,10 @@
 import { Errback, NextFunction, Request, Response, Router } from 'express';
-import { createProxyMiddleware, Filter, Options, RequestHandler } from 'http-proxy-middleware';
+import {
+  createProxyMiddleware,
+  Filter,
+  Options,
+  RequestHandler
+} from 'http-proxy-middleware';
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
@@ -11,23 +16,57 @@ import grafanaRouter from './routes/grafanaRouter';
 import statusRouter from './routes/statusRouter';
 import { MethodError } from './types';
 import { IncomingMessage } from 'http';
+import exp from 'constants';
+import b64 from 'base-64';
+const encode = b64.encode;
 
 const app = express();
-app.use(express.json());
-app.use(cookieParser());
-app.use(bodyParser.json());
+
 dotenv.config();
 
 //DEFINE KEY CONSTANTS HERE for use throughout app
 
+let staticPath: string;
+let mainPath: string;
+
 const PORT = 3000;
 
-const GRAF_HOST = 'grafana'
+const GRAF_HOST = 'grafana';
 const GRAF_PORT = 3000;
 
-const PROM_HOST = 'prometheus-service.monitoring-kv.svc.cluster.local'
+const PROM_HOST = 'prometheus-service.monitoring-kv.svc.cluster.local';
 const PROM_PORT = 8080;
 
+const grafProxy = createProxyMiddleware({
+  target: `http://${GRAF_HOST}:${GRAF_PORT}`,
+  changeOrigin: true,
+  auth: 'admin:admin',
+  timeout: 30000,
+  onProxyReq: function (proxyReq, req, res) {
+    proxyReq.shouldKeepAlive = true;
+    console.log(proxyReq.headersSent);
+    console.log(req.path);
+  },
+  onProxyRes: function (proxyRes, req, res) {
+    proxyRes.headers['Access-Control-Allow-Origin'] = '*';
+    proxyRes.headers['access-control-allow-credentials'] = 'true';
+    proxyRes.headers['access-control-allow-methods'] =
+      'GET, POST, PUT, DELETE, OPTIONS';
+    proxyRes.headers['access-control-allow-headers'] =
+      'Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Requested-With';
+  },
+  onError: (err: Error, req: Request, res: Response) => {
+    console.log(err);
+    console.log(res);
+    res.status(500);
+    res.send(err);
+  }
+});
+
+app.use('/grafanasvc', grafProxy);
+app.use(bodyParser.json());
+app.use(express.json());
+app.use(cookieParser());
 //environment variables
 // const { MONGO_URI, SERVER_PORT } = process.env;
 
@@ -42,11 +81,20 @@ const PROM_PORT = 8080;
 //   .catch((err) => console.log(err));
 
 //serving up html file
+
+if (process.env.NODE_ENV === 'production') {
+  staticPath = '../dist';
+  mainPath = '../dist/index.html';
+} else if (process.env.NODE_ENV === 'development') {
+  staticPath = '../client';
+  mainPath = '../client/index.html';
+}
+
 app.get('/', (req: Request, res: Response) => {
-  return res
-    .status(200)
-    .sendFile(path.resolve(__dirname, '../client/index.html'));
+  return res.status(200).sendFile(path.resolve(__dirname, mainPath));
 });
+
+app.use(express.static(path.resolve(__dirname, staticPath)));
 
 //Prom router gets data from PromAPI
 app.use('/prom', promRouter);
@@ -58,16 +106,10 @@ app.use('/grafana', grafanaRouter);
 app.use('/status', statusRouter);
 
 //Forward calls to Grafana to internal path
-app.use('/grafanasvc', createProxyMiddleware({target: `http://${GRAF_HOST}:${GRAF_PORT}`, changeOrigin: false, auth:'admin:admin', ws: true, onError: (err: Error, req: Request, res: Response) => {
-  console.log(err);
-  console.log(res);
-  res.status(500);
-  res.send(err);
-}}))
-
-//Forward calls to Prom to internal path
-app.use('/promsvc', createProxyMiddleware({target: `http://${PROM_HOST}:${PROM_PORT}`, changeOrigin: false, ws: true }))
-
+// app.use('grafanasvc/api/live', createProxyMiddleware({target: `http://${GRAF_HOST}:${GRAF_PORT}/api/live`,
+// changeOrigin: true,
+// auth: 'admin:admin',
+// timeout: 30000,}))
 
 //404 Handler
 app.use('*', (req: Request, res: Response) => {
@@ -95,6 +137,9 @@ app.use(
 );
 
 //app starts on port 3000
-app.listen(3000, () => {
+const server = app.listen(3000, () => {
   console.log(`Server started to listen on port 3000`);
 });
+server.on('upgrade', grafProxy.upgrade);
+server.keepAliveTimeout = 30000;
+server.headersTimeout = 31000;

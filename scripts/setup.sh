@@ -20,3 +20,6 @@ kubectl apply -f $parentdir/deployment/prometheus/
 
 echo "Setting up Grafana..."
 kubectl apply -f $parentdir/deployment/grafana/
+
+echo "Setting up KlusterView..."
+kubectl apply -f $parentdir/klusterview-manifest.yaml

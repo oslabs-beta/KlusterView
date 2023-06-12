@@ -9,6 +9,7 @@ module.exports = {
     // entry point of our app
     './client/index.tsx'
   ],
+  target: 'web',
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
@@ -44,7 +45,7 @@ module.exports = {
         secure: false,
         headers: {
           Connection: 'keep-alive'
-      }
+        }
       }
     }
   },

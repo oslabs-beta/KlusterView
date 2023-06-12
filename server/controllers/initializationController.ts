@@ -8,8 +8,9 @@ import {
 import { MethodError } from '../types';
 import * as path from 'path';
 import * as fs from 'fs';
-import b64 from 'base-64';
+
 import * as child from 'child_process';
+import b64 from 'base-64';
 const encode = b64.encode;
 
 //Establish place on res.locals for bug testing
@@ -39,7 +40,7 @@ export const getNodeIPs = (): string[] => {
 };
 
 //const IPList = getNodeIPs();
-const GRAF_IP = 'grafana.monitoring-kv.svc.cluster.local'//IPList[0];
+const GRAF_IP = 'grafana.monitoring-kv.svc.cluster.local'; //IPList[0];
 const GRAF_NODE_PORT = '3000';
 
 //Define module-level error generator
@@ -140,7 +141,7 @@ initializationController.initializeGrafana = async (
         }
       }
     );
-    
+
     res.locals.maindash = await mainResp.json();
 
     if (!mainResp.ok) {

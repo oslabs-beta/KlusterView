@@ -1,5 +1,5 @@
 # Set the base image to use for subsequent instructions
-FROM node:alpine
+FROM node:18.13-alpine
 
 # Set the working directory for any subsequent ADD, COPY, CMD, ENTRYPOINT,
 # or RUN instructions that follow it in the Dockerfile
@@ -11,6 +11,7 @@ COPY ./ ./
 
 # Execute any commands on top of the current image as a new layer and commit the results.
 RUN npm install --dev
+RUN npm run build
 
 EXPOSE 3000
 EXPOSE 8080
