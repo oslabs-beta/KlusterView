@@ -5,7 +5,7 @@ import encode from 'base-64';
 import { getNodeIPs } from './initializationController';
 
 //const IPList = getNodeIPs();
-const GRAF_IP = 'grafana'//IPList[0];
+const GRAF_IP = 'grafana'; //IPList[0];
 const GRAF_NODE_PORT = '3000';
 
 //CREATING UNIX TIMESTAMP VALUES FOR "FROM" & "TO"
@@ -50,7 +50,7 @@ const getPods: MiddlewareFn = async (req, res, next) => {
     return next({
       log: 'Express error handler caught getPods middleware error',
       status: 404,
-      message: { err: 'Could not find the dashboard' },
+      message: { err: 'Could not find the dashboard' }
     });
   }
 };
@@ -59,14 +59,14 @@ const getCluster: MiddlewareFn = async (req, res, next) => {
   const { from, to } = timeStamp();
   try {
     const { dashboardUid, dashboardUri } = await getDashboard(0);
-    const src = `/grafanasvc/d/${dashboardUid}/${dashboardUri}/?orgId=1&refresh=30sfrom=${from}&to=${to}`;
+    const src = `/grafanasvc/d/${dashboardUid}/${dashboardUri}/?orgId=1`;
     res.locals.src = src;
     return next();
   } catch (error) {
     return next({
       log: 'Express error handler caught getPods middleware error',
       status: 404,
-      message: { err: 'Could not find the dashboard' },
+      message: { err: 'Could not find the dashboard' }
     });
   }
 };

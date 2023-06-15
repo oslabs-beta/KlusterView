@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name}}-grafana
+  namespace: {{ .Values.namespace }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      name: grafana
+      labels:
+        app: grafana
+    spec:
+      containers:
+        - name: grafana
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: grafana
+              containerPort: 3000
+          resources:
+            limits:
+              memory: {{ .Values.resources.limits.memory }}
+              cpu: {{ .Values.resources.limits.cpu }}
+            requests:
+              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu }}
+          volumeMounts:
+            - mountPath: /var/lib/grafana
+              name: grafana-storage
+            - mountPath: /etc/grafana/provisioning/datasources
+              name: grafana-datasources
+              readOnly: false
+          env:
+            - name: GF_SECURITY_ALLOW_EMBEDDING
+              value: 'true'
+            - name: GF_AUTH_ANONYMOUS_ENABLED
+              value: 'true'
+            - name: GF_AUTH_ANONYMOUS_ORG_NAME
+              value: Main Org.
+            - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+              value: Admin
+            - name: GF_AUTH_ANONYMOUS_HIDE_VERSION
+              value: 'true'
+            - name: GF_FEATURE_TOGGLES_ENABLE
+              value: publicDashboards
+            - name: GF_SERVER_ENFORCE_DOMAIN
+              value: 'false'
+            - name: GF_SERVER_DOMAIN
+              value: grafana
+            - name: GF_SERVER_ROOT_URL
+              value: '%(protocol)s://%(domain)s:%(http_port)s/grafanasvc'
+            - name: GF_SERVER_SERVE_FROM_SUB_PATH
+              value: 'true'
+            - name: GF_DATAPROXY_KEEP_ALIVE_SECONDS
+              value: '240'
+            - name: GF_DATAPROXY_TIMEOUT
+              value: '240'
+            - name: GF_DATAPROXY_IDLE_CONN_TIMEOUT_SECONDS
+              value: '300'
+            - name: 'GF_LIVE_ALLOWED_ORIGINS'
+              value: '*'
+            - name: 'GF_LIVE_MAX_CONNECTIONS'
+              value: '0'
+      volumes:
+        - name: grafana-storage
+          emptyDir: {}
+          #persistentVolumeClaim:
+          #  claimName: grafana-pvc
+        - name: grafana-datasources
+          configMap:
+            defaultMode: 420
+            name: grafana-datasources

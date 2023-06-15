@@ -825,7 +825,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "editorMode": "code",
-          "expr": "sum (rate (container_cpu_usage_seconds_total{pod=~\"^$Deployment.*$\", kubernetes_io_hostname=~\"^$Node$\", namespace=~\"$Namespace.*$\"}[1m]))",
+          "expr": "sum (rate (container_cpu_usage_seconds_total{pod=~\"^$Deployment.*$\", kubernetes_io_hostname=~\"^$Node$\"}[1m]))",
           "format": "time_series",
           "intervalFactor": 2,
           "range": true,

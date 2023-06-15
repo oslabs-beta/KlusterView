@@ -1,0 +1,9 @@
+apiVersion: v2
+name: klusterview
+description: A metrics visualizer for Kubernetes, using custom installations of Prometheus and Grafana
+type: application
+version: 0.1.0
+appVersion: '1.0.0'
+maintainers:
+  - email: kyle.slugg@gmail.com
+    name: Kyle Slugg-Urbino
