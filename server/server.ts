@@ -1,13 +1,7 @@
-import { Errback, NextFunction, Request, Response, Router } from 'express';
-import {
-  createProxyMiddleware,
-  Filter,
-  Options,
-  RequestHandler
-} from 'http-proxy-middleware';
+import { Errback, NextFunction, Request, Response } from 'express';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 import express from 'express';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import path from 'path';
@@ -15,8 +9,6 @@ import promRouter from './routes/promRouter';
 import grafanaRouter from './routes/grafanaRouter';
 import statusRouter from './routes/statusRouter';
 import { MethodError } from './types';
-import { IncomingMessage } from 'http';
-import exp from 'constants';
 import b64 from 'base-64';
 const encode = b64.encode;
 
