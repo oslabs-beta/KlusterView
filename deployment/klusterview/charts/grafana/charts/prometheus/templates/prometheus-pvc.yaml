@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: grafana-pvc
+  name: prometheus-pvc
   namespace: {{ .Values.global.namespace }}
 spec:
   resources:
     requests:
-      storage: 500M
+      storage: 512M
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce

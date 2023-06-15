@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name}}-grafana
-  namespace: {{ .Values.namespace }}
+  name: grafana
+  namespace: {{ .Values.global.namespace }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}

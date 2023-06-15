@@ -10,3 +10,5 @@ deployment/_temp
 .devcontainer
 *.code-workspace
 _util_scripts
+.prettierignore
+
