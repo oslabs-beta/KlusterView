@@ -23,7 +23,7 @@ promRouter.get(
   '/pods/nodes',
   promController.getPodNodes,
   (req: Request, res: Response) => {
-    return res.status(200).json(res.locals.podNodes);
+    return res.status(200).json(res.locals.result);
   }
 );
 
