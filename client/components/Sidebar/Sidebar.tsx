@@ -92,16 +92,9 @@ const Sidebar: FC<SidebarProps> = ({
       </li>
     );
   });
-  // : JSX.Element[]
-  const nodeLinks = Object.keys(nodeMapInfo).map((node) => {
-    return (
-      <li className='navlink navlink-dropdown'>
-        <Link className={`link`} to={`/nodegraph/${node}`}>
-          {node}
-        </Link>
-      </li>
-    );
-  });
+
+  const firstNodeName = Object.keys(nodeMapInfo)[0];
+
   return (
     <nav className='sidebar'>
       <ul className='sidebar-list'>
@@ -117,17 +110,15 @@ const Sidebar: FC<SidebarProps> = ({
           </Link>
         </li>
         <li className='navlink'>
-          {/* <p className='link link-p'>PODS</p> */}
+          <Link className='link' to={`/nodegraph/${firstNodeName}`}>
+            NODE MAP
+          </Link>
+        </li>
+        <li className='navlink'>
           <Link className='link Pod-All' to='/pods/all' onClick={handlePodLink}>
             PODS
           </Link>
           <ul className='sidebar-list dropdown-content'>{podLinks}</ul>
-        </li>
-        <li className='navlink'>
-          <Link className='link' to='/nodegraph/minikube'>
-            NODE MAP
-          </Link>
-          <ul className='sidebar-list dropdown-content'>{nodeLinks}</ul>
         </li>
       </ul>
     </nav>
