@@ -4,8 +4,6 @@ import Home from './pages/Home';
 import Pods from './pages/Pods';
 import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
-import ModalContainer from './components/Modal/ModalContainer';
-import Modal from './components/Modal/Modal';
 import NodeGraph from './components/NodeGraph/NodeGraph';
 
 const App: FC = () => {
@@ -15,35 +13,12 @@ const App: FC = () => {
   const [allPodsUrl, setAllPodsUrl] = useState<string>('');
   const [podTitle, setPodTitle] = useState<string>('');
   const [podInfo, setPodInfo] = useState<{ name: string; ip: number }[]>([]);
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [nodeMapInfo, setNodeMapInfo] = useState<{ [n: string]: string[] }>({});
   const [podStatus, setPodStatus] = useState<{ [p: string]: string }>({});
   const [nodeModalInfo, setnodeModalInfo] = useState<{ [p: string]: string }>(
     {}
   );
 
-  ///////   Check Status   ////////
-  ///////////////////////////////////////////////
-  const fetchStatus = async (endpoint, post) => {
-    try {
-      const res = !post
-        ? await fetch(endpoint)
-        : await fetch(endpoint, {
-            method: 'Post',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-      if (res.ok) {
-        getUrl('/grafana/dashboard', setUrl, setKlusterUrl);
-        setModalVisible(false);
-      } else {
-        setModalVisible(true);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   async function getPodNodes(): Promise<void> {
     try {
       const response = await fetch('/prom/pods/nodes');
@@ -67,9 +42,6 @@ const App: FC = () => {
       throw new Error();
     }
   }
-  useEffect(() => {
-    fetchStatus('/status', false);
-  }, []);
 
   // Fetch Metrics dashboard URLs
   const getUrl = async (
@@ -126,8 +98,6 @@ const App: FC = () => {
           }
         />
       </Routes>
-      {/* <ModalContainer modalVisible={modalVisible} />
-      <Modal modalVisible={modalVisible} fetchStatus={fetchStatus} /> */}
     </>
   );
 };
