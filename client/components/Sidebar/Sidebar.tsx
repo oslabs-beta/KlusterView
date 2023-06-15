@@ -103,12 +103,6 @@ const Sidebar: FC<SidebarProps> = ({
             KLUSTER
           </Link>
         </li>
-
-        <li className='navlink'>
-          <Link className='link' to='/'>
-            ALERTS
-          </Link>
-        </li>
         <li className='navlink'>
           <Link className='link' to={`/nodegraph/${firstNodeName}`}>
             NODE MAP

@@ -2,9 +2,9 @@ import React, { FC, useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Pods from './pages/Pods';
+import Graph from './pages/Graph';
 import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
-import NodeGraph from './components/NodeGraph/NodeGraph';
 
 const App: FC = () => {
   const [url, setUrl] = useState<string>('');
@@ -90,10 +90,10 @@ const App: FC = () => {
         <Route
           path='/nodegraph/:nodeName'
           element={
-            <NodeGraph
+            <Graph
               nodeMapInfo={nodeMapInfo}
-              podStatus={podStatus}
               modalInfo={nodeModalInfo}
+              podStatus={podStatus}
             />
           }
         />
