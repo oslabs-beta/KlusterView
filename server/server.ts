@@ -40,12 +40,44 @@ const PROM_PORT = 8080;
 const grafProxy = createProxyMiddleware({
   target: `http://${GRAF_HOST}:${GRAF_PORT}`,
   changeOrigin: true,
+  ws: true,
   auth: 'admin:admin',
   timeout: 30000,
   onProxyReq: function (proxyReq, req, res) {
     proxyReq.shouldKeepAlive = true;
-    console.log(proxyReq.headersSent);
-    console.log(req.path);
+    //proxyReq.setHeader('host','klusterview.monitoring-kv.svc.cluster.local')
+    proxyReq.setHeader('origin', 'http://grafana:3000');
+    console.log(proxyReq.getHeaders());
+    console.log(req.headers);
+  },
+  onProxyRes: function (proxyRes, req, res) {
+    proxyRes.headers['Access-Control-Allow-Origin'] = '*';
+    proxyRes.headers['access-control-allow-credentials'] = 'true';
+    proxyRes.headers['access-control-allow-methods'] =
+      'GET, POST, PUT, DELETE, OPTIONS';
+    proxyRes.headers['access-control-allow-headers'] =
+      'Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Requested-With';
+  },
+  onError: (err: Error, req: Request, res: Response) => {
+    console.log(err);
+    console.log(res);
+    res.status(500);
+    res.send(err);
+  }
+});
+
+const grafProxyWS = createProxyMiddleware({
+  target: `http://${GRAF_HOST}:${GRAF_PORT}/grafanasvc/api/live/ws`,
+  changeOrigin: true,
+  ws: true,
+  auth: 'admin:admin',
+  timeout: 30000,
+  onProxyReq: function (proxyReq, req, res) {
+    proxyReq.shouldKeepAlive = true;
+    //proxyReq.setHeader('host','klusterview.monitoring-kv.svc.cluster.local')
+    proxyReq.setHeader('origin', 'http://grafana:3000');
+    console.log(proxyReq.getHeaders());
+    console.log(req.headers);
   },
   onProxyRes: function (proxyRes, req, res) {
     proxyRes.headers['Access-Control-Allow-Origin'] = '*';

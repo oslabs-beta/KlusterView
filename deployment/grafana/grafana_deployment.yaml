@@ -62,6 +62,8 @@ spec:
               value: '300'
             - name: 'GF_LIVE_ALLOWED_ORIGINS'
               value: '*'
+            - name: 'GF_LIVE_MAX_CONNECTIONS'
+              value: '0'
       volumes:
         - name: grafana-storage
           emptyDir: {}
