@@ -1,7 +1,7 @@
 {
   "include": ["server/**/*", "client/**/*"],
   "compilerOptions": {
-    "types": ["node"],
+    "types": ["node", "jest"],
     "esModuleInterop": true,
     "jsx": "react",
     "target": "ES6",
