@@ -1,4 +1,4 @@
-import React, { useEffect, FC, SyntheticEvent, MouseEventHandler } from 'react';
+import React, { useEffect, FC, MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 import './Sidebar.scss';
 

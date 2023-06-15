@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
 import NodeGraph from '../components/NodeGraph/NodeGraph';
 import './pages.scss';
 
