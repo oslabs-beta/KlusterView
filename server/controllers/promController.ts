@@ -83,8 +83,22 @@ const getPodNodes: MiddlewareFn = async (req, res, next) => {
       },
       {}
     );
-
-    res.locals.podNodes = podNodes;
+    console.log(pods);
+    let nodeGraphInfo = {};
+    pods.forEach((el: podObject) => {
+      console.log(el.metric);
+      nodeGraphInfo[el.metric.pod] = {};
+      nodeGraphInfo[el.metric.pod]['hostIp'] = el.metric['host_ip'];
+      nodeGraphInfo[el.metric.pod].podIp = el.metric['pod_ip'];
+      nodeGraphInfo[el.metric.pod].node = el.metric.node;
+      nodeGraphInfo[el.metric.pod].nameSpace = el.metric.namespace;
+      nodeGraphInfo[el.metric.pod].job = el.metric.job;
+    });
+    let result = {
+      podNodes: podNodes,
+      nodeGraph: nodeGraphInfo,
+    };
+    res.locals.result = result;
     return next();
   } catch (error) {
     console.log(error);
