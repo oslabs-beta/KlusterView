@@ -62,7 +62,7 @@ app.use(
     const defaultErr = {
       log: 'Express error handler caught unknown middleware error',
       status: 400,
-      message: { err: 'An unknown error occurred' }
+      message: { err: 'An unknown error occurred' },
     };
     const errorObj = Object.assign(defaultErr, err);
     console.log(errorObj.log);
@@ -74,3 +74,5 @@ app.use(
 app.listen(3000, () => {
   console.log(`Server started to listen on port 3000`);
 });
+
+export default app;
