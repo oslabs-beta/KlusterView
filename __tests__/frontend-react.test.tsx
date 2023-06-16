@@ -38,19 +38,16 @@ describe('Dashboard', () => {
     const { container } = render(<Dashboard url={testUrl} />);
     console.log('container', container.firstChild);
 
-    // const dashboardContainer = screen.getByTestId('dashboard-container');
-    // expect(dashboardContainer).toBeInTheDocument();
     console.log('classlist', container.classList);
     expect(container.firstChild.classList.contains('dashboard-container')).toBe(
       true
     );
 
-    // const iframeElement = screen.getByTestId('dashboard');
-    // expect(iframeElement).toBeInTheDocument();
-    expect(
-      container.firstChild.firstChild.classList.contains('dashboard')
-    ).toBe(true);
+    const iframe = container.firstChild.firstChild;
+
+    expect(iframe.classList.contains('dashboard')).toBe(true);
 
     // expect(iframeElement).toHaveAttribute('src', testUrl);
+    expect(iframe).toHaveAttribute('src', testUrl);
   });
 });
