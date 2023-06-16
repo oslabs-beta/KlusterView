@@ -97,6 +97,7 @@ Should you wish to contribute to this project (and you are encouraged to!), you 
       <br />
       <sub><b>Shahmar Aliyev</b></sub>
       <br />
+  <a href="https://shahmaraliyev.com/">💻</a>
       <a href="https://www.linkedin.com/in/shahmaraliyev/">🖇️</a>
       <a href="https://github.com/ShahmarAliyev">🐙</a>
     </td>
