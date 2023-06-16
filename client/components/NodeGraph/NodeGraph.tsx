@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useState } from 'react';
 import ReactFlow, { useNodesState, useEdgesState, addEdge } from 'reactflow';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import 'reactflow/dist/style.css';
 import './NodeGraph.scss';
 import NodeModal from './NodeModal';
@@ -21,8 +22,8 @@ const NodeGraph: FC<NodeGraphProps> = ({
   const nodeUrlName = useParams();
   const root = nodeUrlName.nodeName;
   const children = nodeMapInfo[root];
-  const rootX = 850;
-  const rootY = 300;
+  const rootX = 600;
+  const rootY = 100;
   const initialNodes = [];
   initialNodes.push({
     id: '1',
@@ -31,8 +32,8 @@ const NodeGraph: FC<NodeGraphProps> = ({
     style: { color: 'green', backgroundColor: 'white' },
   });
   const initialEdges = [];
-  let childX = 200;
-  let childY = 400;
+  let childX = 50;
+  let childY = 300;
   type ChildNode = {
     id: string;
     position: {
@@ -52,7 +53,7 @@ const NodeGraph: FC<NodeGraphProps> = ({
   for (let i = 0, times = 0; i < children.length; times++, i++) {
     const childNodeObj: ChildNode = {
       id: `${2 + i}`,
-      position: { x: childX * (times + 1), y: childY },
+      position: { x: childX * 4 * (times + 1), y: childY },
       data: { label: children[i] },
       status: podStatus[children[i]],
       modalData: modalInfo[children[i]],
@@ -61,8 +62,8 @@ const NodeGraph: FC<NodeGraphProps> = ({
         backgroundColor: podStatus[children[i]] === 'Running' ? 'green' : 'red',
       },
     };
-    if (childX * (times + 1) > 1200) {
-      childX = 200;
+    if (childX * 4 * (times + 1) > 1000) {
+      childX = 40;
       childY += 100;
       times = 0;
     }
@@ -91,19 +92,31 @@ const NodeGraph: FC<NodeGraphProps> = ({
     setModal(false);
   };
 
+  // Create links to view each node graph if there are multiple
+  const nodeLinks = Object.keys(nodeMapInfo).map((node) => {
+    return (
+      <li className='navlink-graph'>
+        <Link to={`/nodegraph/${node}`}>{node}</Link>
+      </li>
+    );
+  });
+
   return (
-    <div className='nodeGraph'>
-      {modal ? <NodeModal status={status} modalInfo={podHoverInfo} /> : null}
-      <div style={{ width: '90vw', height: '90vh' }}>
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          onNodeMouseEnter={handleMouseEnter}
-          onNodeMouseLeave={handleMouseLeave}
-        />
+    <div className='nodeGraph-container'>
+      <div className='nodeGraph'>
+        {nodeLinks.length > 1 && <ul className='list'>{nodeLinks}</ul>}
+        {modal && <NodeModal status={status} modalInfo={podHoverInfo} />}
+        <div style={{ width: '100%', height: '90%' }}>
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            onNodeMouseEnter={handleMouseEnter}
+            onNodeMouseLeave={handleMouseLeave}
+          />
+        </div>
       </div>
     </div>
   );
