@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import './Header.scss';
 
-const Header = () => {
+const Header: FC = () => {
   return (
     <header className='header'>
       <h1 className='header-logo'>KV</h1>
