@@ -1,3 +1,5 @@
+@use '../../styles/variables' as *;
+
 .nodeGraph-container {
   width: 100%;
   height: 90%;
@@ -10,7 +12,7 @@
   position: relative;
   width: 95%;
   height: 95%;
-  border: 2px solid cyan;
+  border: 2px solid $secondary-color;
   border-radius: 1.5rem;
 }
 
@@ -39,13 +41,13 @@
 }
 
 .navlink-graph {
-  border: 2px solid rgb(44, 118, 126);
+  border: 2px solid $primary-color;
   border-radius: 1rem;
   width: fit-content;
   padding: 1rem 0;
 
   &:hover {
-    border-color: cyan;
+    border-color: $secondary-color;
   }
 
   &:active {
