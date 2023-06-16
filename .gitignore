@@ -11,4 +11,4 @@ deployment/_temp
 *.code-workspace
 _util_scripts
 .prettierignore
-
+coverage/*

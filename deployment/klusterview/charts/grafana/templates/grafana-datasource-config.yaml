@@ -14,7 +14,7 @@ data:
                 "name": "prometheus",
                 "orgId": 1,
                 "type": "prometheus",
-                "url": "http://prometheus-service.monitoring-kv.svc:8080",
+                "url": "http://prometheus.monitoring-kv.svc:8080",
                 "version": 1
             }
         ]
