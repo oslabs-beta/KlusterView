@@ -4,19 +4,41 @@ import grafanaRouter from '../server/routes/grafanaRouter';
 import promRouter from '../server/routes/promRouter';
 
 //**************************TESTS FOR SERVER.TS *********************/
+
+// beforeAll(async () => {
+//   server = app.listen(3000, () => {
+//     console.log('test server started');
+//   }); // Start the server and store the instance
+// });
+
+// afterAll((done) => {
+//   server.close(done); // Close the server when all tests are finished
+// });
+
 describe('serving HTML files', () => {
-  it('should respond with status 200 if successfully served static files', async () => {
-    const response = await request(app).get('/');
-    expect(response.status).toBe(200);
-    expect(response.type).toBe('text/html');
+  it('should respond with status 200 if successfully served static files', (done) => {
+    request(app)
+      .get('/')
+      .expect('Content-Type', /text\/html; charset=[uU][tT][fF]-8/)
+      .expect(200)
+      .end((err, response) => {
+        if (err) return done(err);
+        done();
+      });
   });
 });
 
 describe('Other endpoint router', () => {
-  it('should respond with status 404 and return "Not found"', async () => {
-    const response = await request(app).get('/testing123');
-    expect(response.status).toBe(404);
-    expect(response.body).toBe('Not found');
+  it('should respond with status 404 and return "Not found"', (done) => {
+    request(app)
+      .get('/testing123')
+      .expect(404)
+      .end((err, response) => {
+        if (err) return done(err);
+
+        expect(response.body).toBe('Not found');
+        done();
+      });
   });
 });
 
