@@ -44,3 +44,9 @@ From the project's `scripts` directory, execute `./setup.sh` with root user perm
 ## Accessing the Application
 
 KlusterView will run on Port 31001 of each node. To display the application, access this port directly via your web browser, or use the tool of your choice (port forwarding, tunneling, MiniKube's `service` command, etc.) to forward the relevant port to your `localhost`.
+
+## How to Contribute
+
+Placeholder Text
+
+## Meet the Team
