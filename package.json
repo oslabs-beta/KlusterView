@@ -1,3 +1,4 @@
+
 {
   "name": "ecri-40-osp-4",
   "version": "1.0.0",
@@ -8,7 +9,12 @@
     "devserver": "NODE_ENV=development nodemon server/server.ts",
     "build": "NODE_ENV=production webpack",
     "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.ts\"",
-    "test": "jest --config ./jest.config.js"
+    "test": "jest __tests__/"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^.+\\.(css|less|scss)$": "babel-jest"
+    }
   },
   "author": "",
   "license": "ISC",
@@ -37,6 +43,7 @@
     "file-loader": "^6.2.0",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.1",
+    "jest-environment-jsdom": "^29.5.0",
     "mini-css-extract-plugin": "^2.7.6",
     "mongodb": "^5.5.0",
     "mongoose": "^7.2.1",
@@ -67,6 +74,7 @@
     "@types/cookie-parser": "^1.4.3",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.2.5",
+    "@types/supertest": "^2.0.12",
     "jest": "^29.5.0",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.0"
