@@ -1,3 +1,4 @@
+
 {
   "name": "ecri-40-osp-4",
   "version": "1.0.0",
@@ -8,7 +9,12 @@
     "devserver": "NODE_ENV=development nodemon server/server.ts",
     "build": "NODE_ENV=production webpack",
     "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.ts\"",
-    "test": "jest --config ./jest.config.js"
+    "test": "jest __tests__/"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^.+\\.(css|less|scss)$": "babel-jest"
+    }
   },
   "author": "",
   "license": "ISC",

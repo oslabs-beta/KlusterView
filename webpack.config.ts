@@ -7,13 +7,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   entry: [
     // entry point of our app
-    './client/index.tsx'
+    './client/index.tsx',
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
     filename: 'bundle.js',
-    clean: true
+    clean: true,
   },
   mode: process.env.NODE_ENV,
   devServer: {
@@ -28,7 +28,7 @@ module.exports = {
       // match the output path
       directory: path.resolve(__dirname, 'dist'),
       // match the output 'publicPath'
-      publicPath: '/'
+      publicPath: '/',
     },
 
     headers: { 'Access-Control-Allow-Origin': '*' },
@@ -41,9 +41,9 @@ module.exports = {
     proxy: {
       '/**': {
         target: 'http://localhost:3000/',
-        secure: false
-      }
-    }
+        secure: false,
+      },
+    },
   },
   module: {
     rules: [
@@ -56,10 +56,10 @@ module.exports = {
             presets: [
               '@babel/preset-env',
               '@babel/preset-typescript',
-              '@babel/preset-react'
-            ]
-          }
-        }
+              '@babel/preset-react',
+            ],
+          },
+        },
       },
       {
         test: /.(css|scss)$/,
@@ -71,10 +71,10 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              sourceMap: true
-            }
-          }
-        ]
+              sourceMap: true,
+            },
+          },
+        ],
       },
 
       {
@@ -83,20 +83,19 @@ module.exports = {
 
         // Added:
         generator: {
-          filename: 'images/[name]-[hash][ext]'
-        }
-      }
-    ]
+          filename: 'images/[name]-[hash][ext]',
+        },
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './client/index.html'
+      template: './client/index.html',
     }),
-    new MiniCssExtractPlugin()
+    new MiniCssExtractPlugin(),
   ],
   resolve: {
     // Enable importing JS / JSX files without specifying their extension
-    extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx']
-  }
-  
+    extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx'],
+  },
 };
