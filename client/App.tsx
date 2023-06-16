@@ -18,6 +18,10 @@ const App: FC = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [nodeMapInfo, setNodeMapInfo] = useState<{ [n: string]: string[] }>({});
   const [podStatus, setPodStatus] = useState<{ [p: string]: string }>({});
+  const [nodeModalInfo, setnodeModalInfo] = useState<{ [p: string]: string }>(
+    {}
+  );
+
   ///////   Check Status   ////////
   ///////////////////////////////////////////////
   const fetchStatus = async (endpoint, post) => {
@@ -45,7 +49,8 @@ const App: FC = () => {
       const response = await fetch('/prom/pods/nodes');
       const data = await response.json();
       if (data) {
-        setNodeMapInfo(data);
+        setNodeMapInfo(data['podNodes']);
+        setnodeModalInfo(data['nodeGraph']);
       }
     } catch (error) {
       throw new Error();
@@ -113,7 +118,11 @@ const App: FC = () => {
         <Route
           path='/nodegraph/:nodeName'
           element={
-            <NodeGraph nodeMapInfo={nodeMapInfo} podStatus={podStatus} />
+            <NodeGraph
+              nodeMapInfo={nodeMapInfo}
+              podStatus={podStatus}
+              modalInfo={nodeModalInfo}
+            />
           }
         />
       </Routes>
