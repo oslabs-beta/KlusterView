@@ -4,7 +4,6 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './styles/app.scss';
 import './styles/normalize.css';
-import Pods from './pages/Pods';
 
 fetch('/status/init')
   .then((r) => console.log(`Status check: response with code ${r.status}`))

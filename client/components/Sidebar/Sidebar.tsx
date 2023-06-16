@@ -1,4 +1,4 @@
-import React, { useEffect, FC, SyntheticEvent, MouseEventHandler } from 'react';
+import React, { useEffect, FC, MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 import './Sidebar.scss';
 
@@ -30,7 +30,7 @@ const Sidebar: FC<SidebarProps> = ({
   allPodsUrl,
   podInfo,
   setPodInfo,
-  nodeMapInfo,
+  nodeMapInfo
 }) => {
   const getPodInfo = async () => {
     try {
@@ -81,7 +81,7 @@ const Sidebar: FC<SidebarProps> = ({
   //Create dropdown pod links by mapping through podLinks
   const podLinks: JSX.Element[] = podInfo.map((pod: PodInfo) => {
     return (
-      <li key={pod.name} className='navlink navlink-dropdown'>
+      <li key={pod.name} className="navlink navlink-dropdown">
         <Link
           className={`link Pod-${pod.name}`}
           to={`/pods/${pod.name}`}
@@ -92,42 +92,27 @@ const Sidebar: FC<SidebarProps> = ({
       </li>
     );
   });
-  // : JSX.Element[]
-  const nodeLinks = Object.keys(nodeMapInfo).map((node) => {
-    return (
-      <li className='navlink navlink-dropdown'>
-        <Link className={`link`} to={`/nodegraph/${node}`}>
-          {node}
-        </Link>
-      </li>
-    );
-  });
+
+  const firstNodeName = Object.keys(nodeMapInfo)[0];
+
   return (
-    <nav className='sidebar'>
-      <ul className='sidebar-list'>
-        <li className='navlink'>
-          <Link className='link' to='/' onClick={handleKlusterLink}>
+    <nav className="sidebar">
+      <ul className="sidebar-list">
+        <li className="navlink">
+          <Link className="link" to="/" onClick={handleKlusterLink}>
             KLUSTER
           </Link>
         </li>
-
-        <li className='navlink'>
-          <Link className='link' to='/'>
-            ALERTS
-          </Link>
-        </li>
-        <li className='navlink'>
-          {/* <p className='link link-p'>PODS</p> */}
-          <Link className='link Pod-All' to='/pods/all' onClick={(e) => {handlePodLink(e)}}>
-            PODS
-          </Link>
-          <ul className='sidebar-list dropdown-content'>{podLinks}</ul>
-        </li>
-        <li className='navlink'>
-          <Link className='link' to='/nodegraph/minikube'>
+        <li className="navlink">
+          <Link className="link" to={`/nodegraph/${firstNodeName}`}>
             NODE MAP
           </Link>
-          <ul className='sidebar-list dropdown-content'>{nodeLinks}</ul>
+        </li>
+        <li className="navlink">
+          <Link className="link Pod-All" to="/pods/all" onClick={handlePodLink}>
+            PODS
+          </Link>
+          <ul className="sidebar-list dropdown-content">{podLinks}</ul>
         </li>
       </ul>
     </nav>

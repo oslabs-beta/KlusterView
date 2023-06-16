@@ -107,5 +107,4 @@ module.exports = {
     // Enable importing JS / JSX files without specifying their extension
     extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx']
   }
-  
 };
