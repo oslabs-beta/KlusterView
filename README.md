@@ -4,9 +4,26 @@
   <img src="./assets/Klusterview.png" style="width:400px"/>
   </p>
 
-## Overview
+## Introducing: KlusterView
 
-<span style="color:red">**Placeholder Text**</span>
+### A lightweight, ready-to-deploy Kubernetes metrics visualizer for the rest of us
+
+Anyone who works regularly with Kubernetes environments knows that, despite the array of tools on the market for monitoring the health and performance of a cluster, knowing precisely what metrics are meaningful (and how to access them for quick reference) can be challenging. This is doubly true for individual developers as well as small and midsize enterprises without large dedicated DevOps teams: the gold standard for performance monitoring in Kubernetes (and other complex orchestration platfoms), the Prometheus/Grafana/Kube State Metrics (PGK) stack, requires extensive up-front configuration, and offers a dizzying array of metrics and visualization options that can bewilder the uninitiated.
+
+Enter KlusterView: a universally compatible plug-and-play visualization tool that distills the best of what the PGK stack has to offer into a streamlined interface, offering a concise and crystal-clear picture of cluster health without any platform-specific setup or specialized configuration. Users can install KlusterView and its dependencies in a single step (details here), and be up and running in minutes, putting critical performance information within a moment's reach wherever and whenever you access your cluster.
+
+## KlusterView v1.0 offers:
+
+- An embedded dashboard displaying moment-by-moment resource usage (CPU, memory, disk), pod and node health status, and trends in these metrics over a variable time window, rendering any concerns immediately visible
+- A schematic representation of cluster nodes and their constitutent pods providing top-line pod-level performance metrics at a glance
+- A specialized dashboard for displaying detailed pod-level metrics, including historical resource usage data, to speed identification of container-specific issues
+- A **single point of access** to all of this, eliminating the need to expose additional in-cluster tools to the local network
+
+**In addition, for those wishing to further integrate KlusterView with existing monitoring tools, we offer:**
+
+- A prebuilt, development-ready application image featuring hot reloading
+- A robust front- and back-end testing suite to safeguard core functionality and simplify maintainability
+- A fully accessible set of installation scripts and YAML configuration files, categorized and indexed for easy modification
 
 ## Installation
 
@@ -111,7 +128,7 @@ Should you wish to contribute to this project (and you are encouraged to!), you 
       <sub><b>Mike Nunn</b></sub>
       <br />
       <div style="display:flex; align-items:center; justify-content:center;">
-        <a href="?????"><img src='./assets/LI-In-Bug.png' style="width:17px; margin: 3px;"/></a>
+        <a href="https://www.linkedin.com/in/mikenunn22/"><img src='./assets/LI-In-Bug.png' style="width:17px; margin: 3px;"/></a>
         <a href="https://github.com/24juice22"><img src="./assets/github-mark.png" style="width:20px; margin:3px;"/></a>
       </div>
     </td>
