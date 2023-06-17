@@ -19,7 +19,7 @@ Enter KlusterView: a universally compatible plug-and-play visualization tool tha
 - A specialized dashboard for displaying detailed pod-level metrics, including historical resource usage data, to speed identification of container-specific issues
 - A **single point of access** to all of this, eliminating the need to expose additional in-cluster tools to the local network
 
-**In addition, for those wishing to further integrate KlusterView with existing monitoring tools, we offer:**
+**For those wishing to further integrate KlusterView with existing monitoring tools, we offer:**
 
 - A prebuilt, development-ready application image featuring hot reloading
 - A robust front- and back-end testing suite to safeguard core functionality and simplify maintainability
