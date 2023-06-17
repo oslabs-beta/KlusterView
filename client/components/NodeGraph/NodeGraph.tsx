@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import ReactFlow, { useNodesState, useEdgesState, addEdge } from 'reactflow';
 
 import NodeModal from './NodeModal';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { initialGen, ChildNode, NodeGraphProps } from './utils';
 
 import 'reactflow/dist/style.css';
@@ -13,10 +13,12 @@ const NodeGraph: FC<NodeGraphProps> = ({
   podStatus,
   modalInfo,
 }) => {
+  const params = useParams();
+
   const [modal, setModal] = useState<boolean>(false);
   const [status, setStatus] = useState<string>('');
   const [podHoverInfo, setPodHoverInfo] = useState<any>({});
-  const [root, setRoot] = useState<string>('minikube');
+  const [root, setRoot] = useState<string>(params.nodeName);
 
   const children = nodeMapInfo[root];
   const { initialNodes, initialEdges } = initialGen(
