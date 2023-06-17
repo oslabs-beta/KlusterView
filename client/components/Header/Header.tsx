@@ -4,7 +4,14 @@ import './Header.scss';
 const Header: FC = () => {
   return (
     <header className='header'>
-      <h1 className='header-logo'>KV</h1>
+      <div className='header-logo'>
+        <img
+          src={require('../../navlogo.png')}
+          alt='logo'
+          width={56}
+          height={56}
+        />
+      </div>
       <div className='header-container'>
         <span>Kluster</span>
         <h1 className='header-name'>View</h1>
