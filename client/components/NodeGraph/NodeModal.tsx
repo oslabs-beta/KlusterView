@@ -5,7 +5,6 @@ interface NodeModalProps {
   modalInfo: { [key: string]: string };
 }
 const NodeModal: FC<NodeModalProps> = ({ status, modalInfo }) => {
-  console.log(status, modalInfo);
   const { hostIp, podIp, node, nameSpace, job } = modalInfo;
   return (
     <div className='nodeModal'>
