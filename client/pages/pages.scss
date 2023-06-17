@@ -1,0 +1,14 @@
+@use '../styles/variables' as *;
+
+.page {
+  height: calc(100vh - 10.25rem);
+  width: calc(100vw - 17rem);
+  margin-left: 15rem;
+  background: transparent;
+  font-size: 2rem;
+  color: $primary-color;
+}
+
+.page-title {
+  margin: 0.5rem 0 0.5rem 4rem;
+}

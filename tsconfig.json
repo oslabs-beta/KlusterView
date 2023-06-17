@@ -1,0 +1,15 @@
+{
+  "include": ["server/**/*", "client/**/*"],
+  "compilerOptions": {
+    "types": ["node", "jest"],
+    "esModuleInterop": true,
+    "jsx": "react",
+    "target": "ES6",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "sourceMap": true
+  },
+  "ts-node": {
+    "esm": true
+  }
+}

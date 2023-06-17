@@ -1,0 +1,33 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+apiVersion: v2
+appVersion: 1.0.0
+dependencies:
+- - name: grafana
+  repository: ""
+description: A metrics visualizer for Kubernetes, using custom installations of Prometheus
+  and Grafana
+maintainers:
+- - email: kyle.slugg@gmail.com
+  name: Kyle Slugg-Urbino
+name: klusterview
+type: application
+version: 0.1.0
+
+...
+files:
+  klusterview-0.1.0.tgz: sha256:35fbf68b130c170828f1d2c71ad31288f4727f2975431ba08cb548bf0883ea30
+-----BEGIN PGP SIGNATURE-----
+
+wsDcBAEBCgAQBQJkjfqUCRDGja6t8joU0QAAcW0MADhaI4SpQ5a/nAcDGrEKmNqe
+2VudrJd6zt8mzIcnrh0U+5P/98SrN2pIQ/0GwI/BgOyCUJBjCmC6144QoBpklrr3
+mXnRQPwmd0Y6baV0NsGHyWAtGcc23y/nWUWqVDEqRPl4mZ1FklYFWfZI5DeQJ3dy
+oFcYHImt8fnA/4hXxTM+sOyGwPBi8X4DV/DMFbGj+WI5u7NkPAiBvP3C7E7v1gRD
+AgOPXd44QAUIDB/dJdGeFkuWAQgpvrKboMNSderqms4z4zfOkMmJ0Ruiv1419goF
+6XpYqZisIpciD60MP8xA4DdKhys+nboD05nJmDxXVbg+uZB9pozelO2RcQZ5BQoB
+sm1i8dbbhrWae6pXuaYX+tN7dk7gtWD3wCRPk/APQ/rKdT2sT+E9UZafmf6A0Yo2
+STso8RU4N6rAczDNO57wYqkobFyIGA9K9Ig9oyKxulnDtZvKLdRppA/AJ99AEX+i
+rB4Blibd58bbdvr3MEOWtxOwqKM/2y5eZlLGh5PGwg==
+=jiiE
+-----END PGP SIGNATURE-----

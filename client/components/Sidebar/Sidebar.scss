@@ -1,0 +1,112 @@
+@use '../../styles/variables' as *;
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 84vh;
+  width: 13rem;
+  color: white;
+  position: fixed;
+  left: 0;
+  margin-left: 2rem;
+  overflow-y: hidden;
+  z-index: 2;
+}
+
+.sidebar-list {
+  list-style-type: none;
+  margin: 15rem 0 0;
+  padding-left: 0;
+  width: 100%;
+}
+
+.navlink {
+  margin: 1.75rem 0;
+  height: 5.5rem;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: border 0.3s;
+  background-color: rgb(25, 25, 25);
+  border-radius: 1rem;
+
+  &:active {
+    transform: scale(0.9);
+  }
+
+  &:last-of-type:active {
+    transform: none;
+  }
+
+  &:hover {
+    border: 1px solid $secondary-color;
+
+    .dropdown-content {
+      opacity: 1;
+      height: 25rem;
+    }
+  }
+}
+
+.dropdown-content {
+  opacity: (0);
+  margin: 0;
+  overflow-y: scroll;
+  font-size: 1rem;
+  height: 0rem;
+  transition: opacity 1s;
+}
+
+.link {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.link-p {
+  margin: 0;
+}
+
+.navlink-dropdown {
+  border-color: $primary-color;
+  margin: 0.5rem 0;
+  height: 4.5rem;
+  border-radius: 0.5rem;
+
+  a {
+    font-weight: normal;
+    color: $secondary-color;
+  }
+
+  &:last-of-type:active {
+    transform: scale(0.9);
+  }
+
+  link {
+    padding: 0.1rem;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 0.7rem;
+  height: 20%;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  box-shadow: inset 0 0 0.2rem $secondary-color;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $secondary-color;
+  border-radius: 0.75rem;
+  border: 1px solid $secondary-color;
+}

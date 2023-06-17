@@ -1,4 +1,15 @@
 node_modules
 .env
 package-lock.json
-
+prom_grafana_setup
+_temp_dev_files
+.dsStore
+**/.dsStore
+deployment/_temp
+**/_deprecated
+.devcontainer
+*.code-workspace
+_util_scripts
+.prettierignore
+coverage/*
+collateral

@@ -1,0 +1,38 @@
+@use '../../styles/variables' as *;
+
+.header {
+  color: $primary-color;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  min-width: 13rem;
+  text-align: center;
+  margin: 2rem 0 2rem 2rem;
+}
+
+.header-container {
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+span {
+  font-size: 5rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: bold;
+  background: -webkit-linear-gradient(360deg, $primary-color 20%, white 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-name {
+  color: white;
+  text-shadow: 1px 1px rgb(10, 202, 224);
+  margin: 2rem 0;
+}

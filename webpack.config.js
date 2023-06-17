@@ -7,8 +7,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   entry: [
     // entry point of our app
-    './client/index.ts'
+    './client/index.tsx'
   ],
+  target: 'web',
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
@@ -17,7 +18,7 @@ module.exports = {
   },
   mode: process.env.NODE_ENV,
   devServer: {
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 8080,
     // enable HMR on the devServer
     hot: true,
@@ -40,8 +41,11 @@ module.exports = {
      */
     proxy: {
       '/**': {
-        target: 'http://localhost:3000/',
-        secure: false
+        target: 'http://0.0.0.0:3000/',
+        secure: false,
+        headers: {
+          Connection: 'keep-alive'
+        }
       }
     }
   },
@@ -61,6 +65,11 @@ module.exports = {
           }
         }
       },
+      // {
+      //   test: /\.(ts|tsx)$/,
+      //   exclude: /node_modules/,
+      //   use: ['ts-loader'],
+      // },
       {
         test: /.(css|scss)$/,
         //exclude: /node_modules/,

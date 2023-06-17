@@ -1,0 +1,21 @@
+@use '../../styles/variables' as *;
+
+.nodeModal {
+  z-index: 1200;
+  position: absolute;
+  width: 300px;
+  height: 175px;
+  left: 120px;
+  top: 50px;
+  border: 1px solid $secondary-color;
+  border-radius: 5px;
+
+  li {
+    list-style: none;
+  }
+
+  text {
+    color: white;
+    margin-right: 5px;
+  }
+}
