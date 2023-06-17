@@ -9,38 +9,10 @@ import { MethodError } from '../types';
 import * as path from 'path';
 import * as fs from 'fs';
 
-import * as child from 'child_process';
 import b64 from 'base-64';
 const encode = b64.encode;
 
-//Establish place on res.locals for bug testing
-
-//Get NodeIPs for grafana
-
-export const getNodeIPs = (): string[] => {
-  let IPs: string[];
-  try {
-    const addresses: string[] = child
-      .execSync('kubectl get nodes -o jsonpath="{.items[*].status.addresses}"')
-      .toString()
-      .split(/\s/gi);
-
-    const addressObj: { address: string; type: string }[] = addresses
-      .map((el) => JSON.parse(el))
-      .flat();
-
-    IPs = addressObj
-      .filter((el) => el.type.search('IP') !== -1)
-      .map((el) => el.address);
-  } catch {
-    IPs = ['localhost'];
-  }
-
-  return IPs;
-};
-
-//const IPList = getNodeIPs();
-const GRAF_IP = 'grafana.monitoring-kv.svc.cluster.local'; //IPList[0];
+const GRAF_IP = 'grafana.monitoring-kv.svc.cluster.local';
 const GRAF_NODE_PORT = '3000';
 
 //Define module-level error generator
@@ -57,9 +29,11 @@ const createError = (
   };
 };
 
+//Define and initialize init controller
 type InitializationController = { [k: string]: RequestHandler };
 const initializationController: InitializationController = {};
 
+//Logs in as admin at start of session
 initializationController.login = async (
   req: Request,
   res: Response,
@@ -105,11 +79,13 @@ initializationController.login = async (
   }
 };
 
+//Loads main and pod dashboards upon first deployment
 initializationController.initializeGrafana = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
+  //Fetch data for main, pod dashboards
   const mainDashboardData = fs
     .readFileSync(
       path.resolve(
@@ -118,7 +94,6 @@ initializationController.initializeGrafana = async (
       )
     )
     .toString();
-  //console.dir(JSON.parse(mainDashboardData));
   const podsDashboardData = fs
     .readFileSync(
       path.resolve(
@@ -167,6 +142,7 @@ initializationController.initializeGrafana = async (
     );
   }
 
+  //Upload pod metrics dashboard
   try {
     const podResp = await fetch(
       `http://${GRAF_IP}:${GRAF_NODE_PORT}/api/dashboards/db`,

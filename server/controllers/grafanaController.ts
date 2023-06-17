@@ -1,7 +1,5 @@
 import { MiddlewareFn } from '../types';
 import axios from 'axios';
-import waitPort from 'wait-port';
-import encode from 'base-64';
 import { getNodeIPs } from './initializationController';
 
 //const IPList = getNodeIPs();
@@ -70,39 +68,5 @@ const getCluster: MiddlewareFn = async (req, res, next) => {
     });
   }
 };
-// const grafanaHost = 'localhost';
-// const grafanaPort = 9000;
-// //this function waits for grafana server to start
-// //only after that we sign the default user in
-// async function waitForServer(): Promise<void> {
-//   try {
-//     console.log('runs');
-
-//     await waitPort({
-//       host: grafanaHost,
-//       port: grafanaPort
-//     });
-
-//     console.log('Grafana server is now running');
-//     await signInUser();
-//   } catch (error) {}
-// }
-// //signs the user in with default credentials
-// async function signInUser(): Promise<void> {
-//   try {
-//     const response = await axios.post(
-//       `http://${GRAF_IP}:${GRAF_NODE_PORT}/login`,
-//       {
-//         user: 'admin',
-//         password: 'admin'
-//       }
-//     );
-
-//     console.log('User signed in successfully');
-//   } catch (error) {
-//     throw error;
-//   }
-// }
-// //waitForServer();
 
 export default { getPods, getCluster };

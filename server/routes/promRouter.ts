@@ -3,15 +3,15 @@ import promController from '../controllers/promController';
 
 const promRouter = express.Router();
 
+//this router gets names of all the pods
 promRouter.get(
   '/pods/',
   promController.getPodNames,
-  // promController.getpodIP,
   (req: Request, res: Response) => {
     return res.status(200).json(res.locals.names);
   }
 );
-
+//this router gets status of all the pods with their name
 promRouter.get(
   '/pod/status',
   promController.getPodStatuses,
@@ -19,6 +19,7 @@ promRouter.get(
     return res.status(200).json(res.locals.podStatusNames);
   }
 );
+//this router gets more pod level data and, nodes with their corresponding pods
 promRouter.get(
   '/pods/nodes',
   promController.getPodNodes,

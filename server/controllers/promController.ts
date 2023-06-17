@@ -6,8 +6,6 @@ const PROM_NODE_PORT = '8080';
 
 const getPodNames: MiddlewareFn = async (req, res, next) => {
   try {
-    console.log('Trying to retrieve pod names');
-
     const response = await axios.get(
       `http://${PROM_IP}:${PROM_NODE_PORT}/api/v1/query?query=kube_pod_info`
     );
@@ -20,15 +18,12 @@ const getPodNames: MiddlewareFn = async (req, res, next) => {
     res.locals.names = podNames;
     return next();
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };
 
 const getpodIP: MiddlewareFn = async (req, res, next) => {
   try {
-    console.log('trying to retrieve ip');
-
     const response = await axios.get(
       `http://${PROM_IP}:${PROM_NODE_PORT}/api/v1/query?query=kube_pod_info`
     );
@@ -39,7 +34,6 @@ const getpodIP: MiddlewareFn = async (req, res, next) => {
     res.locals.podIPs = podIPs;
     return next();
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };
@@ -66,6 +60,9 @@ const getPodStatuses: MiddlewareFn = async (req, res, next) => {
   } catch (error) {}
 };
 
+//controller seperates information under two categories
+//podNodes returns name of the nodes and corresponding pods
+//nodeGraphInfo return more data on pods for NodeGraph
 const getPodNodes: MiddlewareFn = async (req, res, next) => {
   try {
     const response = await axios.get(
@@ -83,10 +80,8 @@ const getPodNodes: MiddlewareFn = async (req, res, next) => {
       },
       {}
     );
-    console.log(pods);
     let nodeGraphInfo = {};
     pods.forEach((el: podObject) => {
-      console.log(el.metric);
       nodeGraphInfo[el.metric.pod] = {};
       nodeGraphInfo[el.metric.pod]['hostIp'] = el.metric['host_ip'];
       nodeGraphInfo[el.metric.pod].podIp = el.metric['pod_ip'];
@@ -100,8 +95,6 @@ const getPodNodes: MiddlewareFn = async (req, res, next) => {
     };
     res.locals.result = result;
     return next();
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 export default { getPodNames, getpodIP, getPodStatuses, getPodNodes };
