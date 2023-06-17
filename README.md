@@ -71,7 +71,7 @@ The state of current and planned features is as follows:
 
 ### Running in Development Mode
 
-Should you wish to contribute to this project (and you are encouraged to!), you may access a live-reloading development server by using our <span style="color:red">**KlusterView development Docker image**</span> in place of that used in production. You may also build this image from source: simply run `docker build -f Dockerfile-dev -t klusterview/dev .`Once loaded, the development server may be accessed on NodePort 31002 in the manner of your choosing.
+Should you wish to contribute to this project (and you are encouraged to!), you may access a live-reloading development server by using our KlusterView development [Docker image](https://hub.docker.com/repository/docker/kyleslugg/klusterview-dev/) in place of that used in production. You may also build this image from source: simply run `docker build -f Dockerfile-dev -t klusterview/dev .`Once loaded, the development server may be accessed on NodePort 31002 in the manner of your choosing.
 
 ### Running Tests
 
@@ -83,41 +83,45 @@ Should you wish to contribute to this project (and you are encouraged to!), you 
 
   <table>
   <tr>
-    <td align="center">
+    <td align="center" >
       <img src="https://avatars.githubusercontent.com/u/35903887?v=4" width="140px;" alt=""/>
       <br />
       <sub><b>Kyle Slugg</b></sub>
       <br />
-      <a href="http://www.kyleslugg.co">💻</a>
-      <a href="https://www.linkedin.com/in/kyle-slugg/">🖇️</a>
-      <a href="https://github.com/kyleslugg">🐙</a>
+      <div style="display:flex; align-items:center; justify-content:center;">
+        <a href="http://www.kyleslugg.co"><img src='./assets/world-wide-web.png' style="width:20px; margin:3px;"/></a>
+        <a href="https://www.linkedin.com/in/kyle-slugg/"><img src='./assets/LI-In-Bug.png' style="width:17px; margin: 3px;"/></a>
+        <a href="https://github.com/kyleslugg"><img src="./assets/github-mark.png" style="width:20px; margin:3px;"/></a>
+      </div>
     </td>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/64520371?v=4" width="140px;" alt=""/>
       <br />
       <sub><b>Shahmar Aliyev</b></sub>
       <br />
-  <a href="https://shahmaraliyev.com/">💻</a>
-      <a href="https://www.linkedin.com/in/shahmaraliyev/">🖇️</a>
-      <a href="https://github.com/ShahmarAliyev">🐙</a>
+        <div style="display:flex; align-items:center; justify-content:center;">
+          <a href="https://shahmaraliyev.com/"><img src='./assets/world-wide-web.png' style="width:20px; margin:3px;"/></a>
+              <a href="https://www.linkedin.com/in/shahmaraliyev/"><img src='./assets/LI-In-Bug.png' style="width:17px; margin: 3px;"/></a>
+              <a href="https://github.com/ShahmarAliyev"><img src="./assets/github-mark.png" style="width:20px; margin:3px;"/></a>
+        </div>
     </td>
     <td align="center">
       <img src="https://d2culxnxbccemt.cloudfront.net/craft/content/uploads/articles/uploads/2013/05/Screen-Shot-2013-05-14-at-11.51.11-AM.png" width="140px;" alt=""/>
       <br />
       <sub><b>Mike Nunn</b></sub>
       <br />
-      <a href="?????">🖇️</a>
-      <a href="https://github.com/24juice22">🐙</a>
+      <div style="display:flex; align-items:center; justify-content:center;">
+        <a href="?????"><img src='./assets/LI-In-Bug.png' style="width:17px; margin: 3px;"/></a>
+        <a href="https://github.com/24juice22"><img src="./assets/github-mark.png" style="width:20px; margin:3px;"/></a>
+      </div>
     </td>
      <td align="center">
       <img src="https://d2culxnxbccemt.cloudfront.net/craft/content/uploads/articles/uploads/2013/05/Screen-Shot-2013-05-14-at-11.51.11-AM.png" width="140px;" alt=""/>
       <br />
       <sub><b>Jonathan Tsai</b></sub>
       <br />
-      <a href="https://www.linkedin.com/in/jonathan-tsai95/">🖇️</a>
-      <a href="https://github.com/jonathantsai1995">🐙</a>
+      <div style="display:flex; align-items:center; justify-content:center;">
+        <a href="https://www.linkedin.com/in/jonathan-tsai95/"><img src='./assets/LI-In-Bug.png' style="width:17px; margin: 3px;"/></a>
+        <a href="https://github.com/jonathantsai1995"><img src="./assets/github-mark.png" style="width:20px; margin:3px;"/></a>
+      </div>
     </td>
-
-- 💻 = Website
-- 🖇️ = LinkedIn
-- 🐙 = Github
