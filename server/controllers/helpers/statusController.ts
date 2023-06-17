@@ -1,10 +1,10 @@
 import { Request, Response, RequestHandler, NextFunction } from 'express';
-import { MethodError } from '../types';
+import { MethodError } from '../../types';
 import {
   clusterRunning,
   prometheusAndGrafanaRunning,
   runSetup
-} from './helpers/statusHelpers';
+} from './statusHelpers';
 
 //Define StatusController type and initialize empty controller
 type StatusController = { [s: string]: RequestHandler };

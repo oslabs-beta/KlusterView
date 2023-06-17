@@ -1,9 +1,7 @@
 import { MiddlewareFn } from '../types';
 import axios from 'axios';
-import { getNodeIPs } from './initializationController';
 
-//const IPList = getNodeIPs();
-const GRAF_IP = 'grafana'; //IPList[0];
+const GRAF_IP = 'grafana';
 const GRAF_NODE_PORT = '3000';
 
 //CREATING UNIX TIMESTAMP VALUES FOR "FROM" & "TO"
@@ -21,8 +19,6 @@ async function getDashboard(resource: number): Promise<{
   dashboardUri: string;
 }> {
   try {
-    // getAuthToken();
-
     const response = await axios.get(
       `http://admin:admin@${GRAF_IP}:${GRAF_NODE_PORT}/api/search?type=dash-db`
     );
