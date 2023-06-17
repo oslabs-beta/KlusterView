@@ -1,7 +1,6 @@
-import { Errback, NextFunction, Request, Response, Router } from 'express';
+import { Errback, NextFunction, Request, Response } from 'express';
 import express from 'express';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import path from 'path';
@@ -15,19 +14,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
 dotenv.config();
-
-//environment variables
-// const { MONGO_URI, SERVER_PORT } = process.env;
-
-// if (!MONGO_URI) {
-//   //type guarding
-//   throw new Error('MONGO_URI environment variable is not set');
-// }
-// //databse connection
-// mongoose
-//   .connect(MONGO_URI)
-//   .then(() => console.log('Database connection started'))
-//   .catch((err) => console.log(err));
 
 //serving up html file
 app.get('/', (req: Request, res: Response) => {

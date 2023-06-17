@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import grafanaController from '../controllers/grafanaController';
 const grafanaRouter = express.Router();
 
-//this route gets the pods dashbaord
+//this route gets the pods dashbaord url
 grafanaRouter.get(
   '/pods',
   grafanaController.getPods,
@@ -14,7 +14,7 @@ grafanaRouter.get(
     }
   }
 );
-// this route get cluster/main dashboard
+// this route get cluster/main dashboard url
 grafanaRouter.get(
   '/dashboard',
   grafanaController.getCluster,
