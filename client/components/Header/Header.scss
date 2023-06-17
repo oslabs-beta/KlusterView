@@ -5,6 +5,11 @@
   font-size: 2.5rem;
   display: flex;
   align-items: center;
+  img {
+    width: 56px;
+    height: 56px;
+    cursor: pointer;
+  }
 }
 
 .header-logo {
