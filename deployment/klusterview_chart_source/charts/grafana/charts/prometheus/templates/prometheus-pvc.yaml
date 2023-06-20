@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-pvc
+  namespace: {{ .Values.global.namespace }}
+spec:
+  resources:
+    requests:
+      storage: 512M
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce

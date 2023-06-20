@@ -1,10 +1,8 @@
 import { MiddlewareFn, PodMetric, stausObject, podObject } from '../types';
 import axios from 'axios';
-import { getNodeIPs } from './initializationController';
 
-const IPList = getNodeIPs();
-const PROM_IP = IPList[0];
-const PROM_NODE_PORT = '30000';
+const PROM_IP = 'prometheus.monitoring-kv.svc.cluster.local';
+const PROM_NODE_PORT = '8080';
 
 const getPodNames: MiddlewareFn = async (req, res, next) => {
   try {
@@ -93,7 +91,7 @@ const getPodNodes: MiddlewareFn = async (req, res, next) => {
     });
     let result = {
       podNodes: podNodes,
-      nodeGraph: nodeGraphInfo,
+      nodeGraph: nodeGraphInfo
     };
     res.locals.result = result;
     return next();

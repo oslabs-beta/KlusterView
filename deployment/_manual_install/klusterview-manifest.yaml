@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: klusterview
+  namespace: monitoring-kv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: klusterview
+  template:
+    metadata:
+      name: klusterview
+      labels:
+        app: klusterview
+    spec:
+      containers:
+        - name: klusterview
+          image: kyleslugg/klusterview:latest
+          resources:
+            limits:
+              memory: '500Mi'
+              cpu: '500m'
+          ports:
+            - name: prod
+              containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: klusterview
+  namespace: monitoring-kv
+spec:
+  selector:
+    app: klusterview
+  type: NodePort
+  ports:
+    - name: prod
+      port: 3000
+      targetPort: 3000
+      nodePort: 31001
+      protocol: TCP

@@ -30,7 +30,7 @@ const Sidebar: FC<SidebarProps> = ({
   allPodsUrl,
   podInfo,
   setPodInfo,
-  nodeMapInfo,
+  nodeMapInfo
 }) => {
   const getPodInfo = async () => {
     try {
@@ -51,7 +51,7 @@ const Sidebar: FC<SidebarProps> = ({
     setUrl(klusterUrl);
   };
 
-  const handlePodLink = (e: MouseEventHandler<HTMLAnchorElement>) => {
+  const handlePodLink = (e: MouseEventHandler<MouseEvent>) => {
     // Update page title with pod name
     const podClassName = e.currentTarget.classList[1];
     setPodTitle(podClassName);
@@ -81,7 +81,7 @@ const Sidebar: FC<SidebarProps> = ({
   //Create dropdown pod links by mapping through podLinks
   const podLinks: JSX.Element[] = podInfo.map((pod: PodInfo) => {
     return (
-      <li key={pod.name} className='navlink navlink-dropdown'>
+      <li key={pod.name} className="navlink navlink-dropdown">
         <Link
           className={`link Pod-${pod.name}`}
           to={`/pods/${pod.name}`}
@@ -96,23 +96,23 @@ const Sidebar: FC<SidebarProps> = ({
   const firstNodeName = Object.keys(nodeMapInfo)[0];
 
   return (
-    <nav className='sidebar'>
-      <ul className='sidebar-list'>
-        <li className='navlink'>
-          <Link className='link' to='/' onClick={handleKlusterLink}>
+    <nav className="sidebar">
+      <ul className="sidebar-list">
+        <li className="navlink">
+          <Link className="link" to="/" onClick={handleKlusterLink}>
             KLUSTER
           </Link>
         </li>
-        <li className='navlink'>
-          <Link className='link' to={`/nodegraph/${firstNodeName}`}>
+        <li className="navlink">
+          <Link className="link" to={`/nodegraph/${firstNodeName}`}>
             NODE MAP
           </Link>
         </li>
-        <li className='navlink'>
-          <Link className='link Pod-All' to='/pods/all' onClick={handlePodLink}>
+        <li className="navlink">
+          <Link className="link Pod-All" to="/pods/all" onClick={handlePodLink}>
             PODS
           </Link>
-          <ul className='sidebar-list dropdown-content'>{podLinks}</ul>
+          <ul className="sidebar-list dropdown-content">{podLinks}</ul>
         </li>
       </ul>
     </nav>

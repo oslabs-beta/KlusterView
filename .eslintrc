@@ -1,0 +1,38 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "plugins": ["import", "react", "jsx-a11y"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-unused-vars": ["off", { "vars": "local" }],
+    "indent": ["warn", 2],
+    "quotes": ["warn", "single"],
+    "prefer-const": "warn",
+    "semi": ["warn", "always"],
+    "react/prefer-stateless-function": "off",
+    "react/prop-types": "off",
+    "react/jsx-key": "warn"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": "webpack"
+  }
+}

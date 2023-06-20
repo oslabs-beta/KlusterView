@@ -8,36 +8,12 @@ import {
 import { MethodError } from '../types';
 import * as path from 'path';
 import * as fs from 'fs';
-import { encode } from 'base-64';
-import * as child from 'child_process';
 
-//Get NodeIPs for grafana
+import b64 from 'base-64';
+const encode = b64.encode;
 
-export const getNodeIPs = (): string[] => {
-  let IPs: string[];
-  try {
-    const addresses: string[] = child
-      .execSync('kubectl get nodes -o jsonpath="{.items[*].status.addresses}"')
-      .toString()
-      .split(/\s/gi);
-
-    const addressObj: { address: string; type: string }[] = addresses
-      .map((el) => JSON.parse(el))
-      .flat();
-
-    IPs = addressObj
-      .filter((el) => el.type.search('IP') !== -1)
-      .map((el) => el.address);
-  } catch {
-    IPs = ['localhost'];
-  }
-
-  return IPs;
-};
-
-const IPList = getNodeIPs();
-const GRAF_IP = IPList[0];
-const GRAF_NODE_PORT = '32000';
+const GRAF_IP = 'grafana.monitoring-kv.svc.cluster.local';
+const GRAF_NODE_PORT = '3000';
 
 //Define module-level error generator
 const createError = (
@@ -53,9 +29,11 @@ const createError = (
   };
 };
 
+//Define and initialize init controller
 type InitializationController = { [k: string]: RequestHandler };
 const initializationController: InitializationController = {};
 
+//Logs in as admin at start of session
 initializationController.login = async (
   req: Request,
   res: Response,
@@ -73,6 +51,8 @@ initializationController.login = async (
         password: 'admin'
       })
     });
+
+    res.locals.login = await response.json();
 
     if (!response.ok) {
       const resp = await response.json();
@@ -99,11 +79,13 @@ initializationController.login = async (
   }
 };
 
+//Loads main and pod dashboards upon first deployment
 initializationController.initializeGrafana = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
+  //Fetch data for main, pod dashboards
   const mainDashboardData = fs
     .readFileSync(
       path.resolve(
@@ -112,7 +94,6 @@ initializationController.initializeGrafana = async (
       )
     )
     .toString();
-  //console.dir(JSON.parse(mainDashboardData));
   const podsDashboardData = fs
     .readFileSync(
       path.resolve(
@@ -135,6 +116,8 @@ initializationController.initializeGrafana = async (
         }
       }
     );
+
+    res.locals.maindash = await mainResp.json();
 
     if (!mainResp.ok) {
       if (mainResp.status !== 412) {
@@ -159,6 +142,7 @@ initializationController.initializeGrafana = async (
     );
   }
 
+  //Upload pod metrics dashboard
   try {
     const podResp = await fetch(
       `http://${GRAF_IP}:${GRAF_NODE_PORT}/api/dashboards/db`,
@@ -171,7 +155,7 @@ initializationController.initializeGrafana = async (
         }
       }
     );
-
+    res.locals.poddash = await podResp.json();
     if (!podResp.ok) {
       if (podResp.status !== 412) {
         const resp = await podResp.json();
