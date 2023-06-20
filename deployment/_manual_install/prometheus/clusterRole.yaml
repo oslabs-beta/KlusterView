@@ -31,4 +31,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: default
-    namespace: { { Values.global.namespace } }
+    namespace: monitoring-kv
