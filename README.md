@@ -41,14 +41,14 @@ KlusterView is most easily installed using its Helm chart, held in this reposito
 #### Get Helm Repository Info
 
 ```shell
-helm repo add klusterview "<-----URL WILL GO HERE----->"
+helm repo add klusterview https://oslabs-beta.github.io/KlusterView/
 helm repo update
 ```
 
 #### Install Helm Chart
 
 ```shell
-helm install [Release Name] klusterview/klusterview
+helm install [Name of your choice] klusterview/klusterview
 ```
 
 ### Manual Installation
@@ -92,9 +92,7 @@ Should you wish to contribute to this project (and you are encouraged to!), you 
 
 ### Running Tests
 
-<span style="color:red">**Defer to Mike and Jonathan here**</span>
-
-### Pull Request Review Policy
+To run unit tests on the app server, simply run `npm test` within the development container. For frontend testing, run `jest frontend-react.test`
 
 ## Meet the Team
 
@@ -123,7 +121,7 @@ Should you wish to contribute to this project (and you are encouraged to!), you 
         </div>
     </td>
     <td align="center">
-      <img src="https://d2culxnxbccemt.cloudfront.net/craft/content/uploads/articles/uploads/2013/05/Screen-Shot-2013-05-14-at-11.51.11-AM.png" width="140px;" alt=""/>
+      <img src="https://ca.slack-edge.com/T04JVBZN59D-U04N4DT2TGX-ebe1b9eea21e-512" width="140px;" alt=""/>
       <br />
       <sub><b>Mike Nunn</b></sub>
       <br />
@@ -133,7 +131,7 @@ Should you wish to contribute to this project (and you are encouraged to!), you 
       </div>
     </td>
      <td align="center">
-      <img src="https://d2culxnxbccemt.cloudfront.net/craft/content/uploads/articles/uploads/2013/05/Screen-Shot-2013-05-14-at-11.51.11-AM.png" width="140px;" alt=""/>
+      <img src="https://ca.slack-edge.com/T04JVBZN59D-U04NGNEEK0D-fb381f0bc236-512" width="140px;" alt=""/>
       <br />
       <sub><b>Jonathan Tsai</b></sub>
       <br />
