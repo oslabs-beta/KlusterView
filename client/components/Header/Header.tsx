@@ -6,7 +6,7 @@ const Header: FC = () => {
     <header className='header'>
       <div className='header-logo'>
         <img
-          src={require('../../navlogo.png')}
+          src={require('../../../assets/headerLogo.png')}
           alt='logo'
           width={56}
           height={56}
