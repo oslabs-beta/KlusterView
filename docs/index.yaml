@@ -3,13 +3,13 @@ entries:
   klusterview:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-06-17T14:26:02.325775625-04:00"
+    created: "2023-06-21T12:12:54.081776644-04:00"
     dependencies:
     - name: grafana
       repository: ""
     description: A metrics visualizer for Kubernetes, using custom installations of
       Prometheus and Grafana
-    digest: 35fbf68b130c170828f1d2c71ad31288f4727f2975431ba08cb548bf0883ea30
+    digest: b6b1c3355c123df2e21f40fdb02d25dd4a549792134c0a01b800d1de800e2b0f
     maintainers:
     - email: kyle.slugg@gmail.com
       name: Kyle Slugg-Urbino
@@ -18,4 +18,4 @@ entries:
     urls:
     - klusterview-0.1.0.tgz
     version: 0.1.0
-generated: "2023-06-17T14:26:02.320800389-04:00"
+generated: "2023-06-21T12:12:54.080050576-04:00"
