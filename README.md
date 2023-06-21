@@ -92,7 +92,7 @@ Should you wish to contribute to this project (and you are encouraged to!), you 
 
 ### Running Tests
 
-To run unit tests on the app server, simply run `npm test` within the development container.
+To run unit tests on the app server, simply run `npm test` within the development container. For frontend testing, run `jest frontend-react.test`
 
 ## Meet the Team
 
