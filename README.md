@@ -103,8 +103,8 @@ To run unit tests on the app server, simply run `npm test` within the developmen
       <br />
       <sub><b>Kyle Slugg</b></sub>
       <br />
-      <div style="display:flex; align-items:center; justify-content:center;">
-        <a href="http://www.kyleslugg.co"><img src='./assets/world-wide-web.png' style="width:20px; margin:3px;"/></a>
+      <div style="display:flex; align-items:top; justify-content:center;">
+        <a href="http://www.kyleslugg.com"><img src='./assets/world-wide-web.png' style="width:20px; margin:3px;"/></a>
         <a href="https://www.linkedin.com/in/kyle-slugg/"><img src='./assets/LI-In-Bug.png' style="width:17px; margin: 3px;"/></a>
         <a href="https://github.com/kyleslugg"><img src="./assets/github-mark.png" style="width:20px; margin:3px;"/></a>
       </div>
@@ -114,7 +114,7 @@ To run unit tests on the app server, simply run `npm test` within the developmen
       <br />
       <sub><b>Shahmar Aliyev</b></sub>
       <br />
-        <div style="display:flex; align-items:center; justify-content:center;">
+        <div style="display:flex; align-items:top; justify-content:center;">
           <a href="https://shahmaraliyev.com/"><img src='./assets/world-wide-web.png' style="width:20px; margin:3px;"/></a>
               <a href="https://www.linkedin.com/in/shahmaraliyev/"><img src='./assets/LI-In-Bug.png' style="width:17px; margin: 3px;"/></a>
               <a href="https://github.com/ShahmarAliyev"><img src="./assets/github-mark.png" style="width:20px; margin:3px;"/></a>
@@ -125,7 +125,7 @@ To run unit tests on the app server, simply run `npm test` within the developmen
       <br />
       <sub><b>Mike Nunn</b></sub>
       <br />
-      <div style="display:flex; align-items:center; justify-content:center;">
+      <div style="display:flex; align-items:top; justify-content:center;">
         <a href="https://www.linkedin.com/in/mikenunn22/"><img src='./assets/LI-In-Bug.png' style="width:17px; margin: 3px;"/></a>
         <a href="https://github.com/24juice22"><img src="./assets/github-mark.png" style="width:20px; margin:3px;"/></a>
       </div>
@@ -135,7 +135,7 @@ To run unit tests on the app server, simply run `npm test` within the developmen
       <br />
       <sub><b>Jonathan Tsai</b></sub>
       <br />
-      <div style="display:flex; align-items:center; justify-content:center;">
+      <div style="display:flex; align-items: top; justify-content:center;">
         <a href="https://www.linkedin.com/in/jonathan-tsai95/"><img src='./assets/LI-In-Bug.png' style="width:17px; margin: 3px;"/></a>
         <a href="https://github.com/jonathantsai1995"><img src="./assets/github-mark.png" style="width:20px; margin:3px;"/></a>
       </div>
